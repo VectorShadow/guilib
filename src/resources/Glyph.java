@@ -11,5 +11,5 @@ import java.util.Random;
 
 public interface Glyph {
     Random RNG = new Random();
-    BufferedImage getImage();
+    BufferedImage getImage(boolean fullScreen);
 }

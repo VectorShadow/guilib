@@ -41,7 +41,7 @@ public interface Gui {
      * Output methods.
      * Clear removes Glyphs from the screen.
      * Print adds Glyphs to the screen.
-     * Redraw draws added Glyphs.
+     * Redraw paints the screen with an image derived from all added Glyphs
      */
     //clear the entire screen
     void clear();
@@ -57,8 +57,4 @@ public interface Gui {
     void print(int zone, int row, int col, ArrayList<Glyph> g);
     //draw all currently set Glyphs to the monitor
     void redraw();
-    //draw all currently set Glyphs in one Zone to the monitor
-    void redraw(int zone);
-    //draw the Glyph at the specified Zone, Row, and Column
-    void redraw(int zone, int row, int col);
 }
