@@ -1,6 +1,8 @@
 package contract;
 
 import resources.Glyph;
+import resources.OutputMode;
+import resources.RenderContext;
 
 import java.util.ArrayList;
 
@@ -8,10 +10,6 @@ import java.util.ArrayList;
  * Defines the contract for a GUI. Every sort of GUI should conform to this contract.
  */
 public interface Gui {
-    enum OutputMode {
-        TEXT,
-        TILE
-    }
     /**
      * Admin methods.
      *
@@ -30,7 +28,7 @@ public interface Gui {
      *
      */
     //add a zone with the specified parameters
-    void addZone(int rowOrigin, int colOrigin, int numRows, int numCols, OutputMode mode);
+    void addZone(int rowOrigin, int colOrigin, int numRows, int numCols, OutputMode om);
     //stop displaying the specified Zone
     void hideZone(int zoneID);
     //remove the specified Zone
