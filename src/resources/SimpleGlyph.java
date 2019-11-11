@@ -35,7 +35,7 @@ public class SimpleGlyph extends ASCIIImage implements Glyph {
     }
 
     @Override
-    public BufferedImage getImage(boolean fullScreen) {
-        return render(fullScreen);
+    public BufferedImage getImage(boolean isTile, boolean fullScreen) {
+        return render(isTile, fullScreen);
     }
 }
