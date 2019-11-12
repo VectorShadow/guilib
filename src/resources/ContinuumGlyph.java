@@ -33,7 +33,7 @@ public class ContinuumGlyph extends ASCIIImage implements Glyph{
     }
 
     @Override
-    public BufferedImage getImage(boolean isTile, boolean fullScreen) {
-        return render(isTile, fullScreen);
+    public BufferedImage getImage() {
+        return render();
     }
 }

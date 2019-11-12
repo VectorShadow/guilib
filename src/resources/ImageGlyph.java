@@ -11,7 +11,7 @@ public class ImageGlyph implements Glyph {
     }
 
     @Override
-    public BufferedImage getImage(boolean isTile, boolean fullScreen) {
+    public BufferedImage getImage() {
         return image; //todo - upscale the image if fullScreen
     }
 }

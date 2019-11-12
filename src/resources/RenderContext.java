@@ -20,6 +20,7 @@ public abstract class RenderContext {
      */
     public abstract Dimension imageSize();
     public abstract Font imageFont();
+    public abstract OutputMode outputMode();
 
     @Override
     public boolean equals(Object o) {

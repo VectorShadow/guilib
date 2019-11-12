@@ -7,7 +7,7 @@ public abstract class ASCIIImage {
     protected abstract Color getBackground();
     protected abstract Color getForeground();
     protected abstract char getSymbol();
-    protected BufferedImage render(boolean isTile, boolean fullScreen){
+    protected BufferedImage render(){
         return Renderer.getImage(getBackground(), getForeground(), getSymbol());
     }
 }

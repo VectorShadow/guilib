@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Renderer extends JLabel {
     private RenderContext renderContext;
     private static RenderContext staticRenderContext;
-    private static ArrayList<Renderer> activeRenderers;
+    private static ArrayList<Renderer> activeRenderers = new ArrayList<>();
 
     private Renderer(RenderContext rc){
         renderContext = rc;
@@ -51,14 +51,20 @@ public class Renderer extends JLabel {
     public Dimension getSize(){
         return renderContext.imageSize();
     }
+    /**
+     * Count the number of units for the given OutputMode which would completely fill the display.
+     */
+    public static Dimension countUnits(OutputMode om) {
+        return countUnits(countPixels(), om);
+    }
 
     /**
-     * Count the number of units based on the provided Renderer which would completely fill the display.
+     * Count the number of units for the given OutputMode which would completely fill the zone.
      */
-    public static Dimension countUnits(RenderContext rc) {
+    public static Dimension countUnits(Dimension zone, OutputMode om) {
         return new Dimension(
-                countPixels().width / rc.imageSize().width,
-                countPixels().height / rc.imageSize().height
+                zone.width / om.generateContext(true).imageSize().width,
+                zone.height / om.generateContext(true).imageSize().height
         );
     }
 }

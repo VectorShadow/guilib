@@ -10,6 +10,8 @@ import java.util.Random;
  */
 
 public interface Glyph {
+    SimpleGlyph EMPTY_GLYPH = new SimpleGlyph(Color.BLACK, Color.WHITE, ' ');
+
     Random RNG = new Random();
-    BufferedImage getImage(boolean isTile, boolean fullScreen);
+    BufferedImage getImage();
 }
