@@ -36,4 +36,14 @@ public class ContinuumGlyph extends ASCIIImage implements Glyph{
     public BufferedImage getImage() {
         return render();
     }
+
+    @Override
+    public WordBreak checkBreak() {
+        switch (symbol.base) {
+            case ' ': return WordBreak.SPACE;
+            case '\t': return WordBreak.TAB;
+            case '\n': return WordBreak.RETURN;
+            default: return WordBreak.NO_BREAK;
+        }
+    }
 }

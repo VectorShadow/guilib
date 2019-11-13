@@ -10,8 +10,15 @@ import java.util.Random;
  */
 
 public interface Glyph {
+    enum WordBreak{
+        NO_BREAK,
+        SPACE,
+        TAB,
+        RETURN
+    }
     SimpleGlyph EMPTY_GLYPH = new SimpleGlyph(Color.BLACK, Color.WHITE, ' ');
 
     Random RNG = new Random();
     BufferedImage getImage();
+    WordBreak checkBreak();
 }
