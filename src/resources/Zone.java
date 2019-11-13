@@ -2,6 +2,7 @@ package resources;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Zone {
     int rowOrigin, colOrigin, numRows, numCols;
@@ -54,6 +55,10 @@ public class Zone {
     }
     public void print(int row, int col, Glyph g) {
         glyphMap.setGlyph(row, col, g);
+    }
+    public void print(int row, int col, ArrayList<Glyph> g) {
+        GlyphStringProtocol gsp = mode.getGlyphStringProtocol();
+        //todo - lots here!
     }
     public void clear() {
         glyphMap.initialize();
