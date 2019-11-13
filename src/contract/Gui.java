@@ -28,7 +28,12 @@ public interface Gui {
      *
      */
     //add a zone with the specified parameters
-    void addZone(int rowOrigin, int colOrigin, int numRows, int numCols, OutputMode om);
+    public void addZone(
+            double verticalOriginPct,
+            double verticalSizePct,
+            double horizontalOriginPct,
+            double horizontalSizePct,
+            OutputMode om);
     //stop displaying the specified Zone
     void hideZone(int zoneID);
     //remove the specified Zone

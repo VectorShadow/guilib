@@ -8,11 +8,18 @@ public class Zone {
     private OutputMode mode;
     private GlyphMap glyphMap;
 
-    public Zone(int ro, int co, int nr, int nc, OutputMode om) {
-        rowOrigin = ro;
-        colOrigin = co;
-        numRows = nr;
-        numCols = nc;
+    public Zone(
+            double verticalOriginPct,
+            double verticalSizePct,
+            double horizontalOriginPct,
+            double horizontalSizePct,
+            OutputMode om
+    ) {
+        Dimension pixels = Renderer.countPixels();
+        rowOrigin = (int)(verticalOriginPct * pixels.getHeight());
+        colOrigin = (int)(horizontalOriginPct * pixels.getWidth());
+        numRows = (int)(verticalSizePct * pixels.getHeight());
+        numCols = (int)(horizontalSizePct * pixels.getWidth());
         mode = om;
         glyphMap = new GlyphMap(
                 Renderer.countUnits(getDimension(), om).height,
@@ -20,27 +27,36 @@ public class Zone {
         );
     }
     public Dimension getDimension() {
-        return new Dimension(numCols - colOrigin, numRows - rowOrigin);
+        return new Dimension(numCols, numRows);
     }
     public void draw(boolean fullScreen, BufferedImage paneImage) {
         RenderContext rc = mode.generateContext(fullScreen);
         Renderer.setRenderContext(rc);
-       // BufferedImage lg = new BufferedImage(getDimension().width, getDimension().height, BufferedImage.TYPE_INT_ARGB);
         BufferedImage unitImage;
+        int pixelRow, pixelCol;
         for (int i = 0; i < glyphMap.rows; ++i) {
             for (int j = 0; j < glyphMap.cols; ++j) {
                 unitImage = glyphMap.getGlyph(i, j).getImage();
                 for (int k = 0; k < unitImage.getHeight(); ++k) {
                     for (int l = 0; l < unitImage.getWidth(); ++l) {
+                        pixelCol = (colOrigin / (fullScreen ? 1 : 2)) + (j * unitImage.getWidth() + l);
+                        pixelRow = (rowOrigin / (fullScreen ? 1 : 2))+ (i * unitImage.getHeight() + k);
+                        if (pixelCol >= paneImage.getWidth() || pixelRow >= paneImage.getHeight() || pixelCol < 0 || pixelRow < 0) continue;
                         paneImage.setRGB(
-                                colOrigin + (j * unitImage.getWidth() + l),
-                                rowOrigin + (i * unitImage.getHeight() + k),
+                                pixelCol,
+                                pixelRow,
                                 unitImage.getRGB(l, k)
                         );
                     }
                 }
             }
         }
+    }
+    public void print(int row, int col, Glyph g) {
+        glyphMap.setGlyph(row, col, g);
+    }
+    public void clear() {
+        glyphMap.initialize();
     }
     //todo - lots of methods for conversions
 }
