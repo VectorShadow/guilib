@@ -22,22 +22,25 @@ public class Zone {
     public Dimension getDimension() {
         return new Dimension(numCols - colOrigin, numRows - rowOrigin);
     }
-    public BufferedImage draw(boolean fullScreen) {
+    public void draw(boolean fullScreen, BufferedImage paneImage) {
         RenderContext rc = mode.generateContext(fullScreen);
         Renderer.setRenderContext(rc);
-        BufferedImage lg = new BufferedImage(getDimension().width, getDimension().height, BufferedImage.TYPE_INT_ARGB);
-        BufferedImage sm;
+       // BufferedImage lg = new BufferedImage(getDimension().width, getDimension().height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage unitImage;
         for (int i = 0; i < glyphMap.rows; ++i) {
             for (int j = 0; j < glyphMap.cols; ++j) {
-                sm = glyphMap.getGlyph(i, j).getImage();
-                for (int k = 0; k < sm.getHeight(); ++k) {
-                    for (int l = 0; l < sm.getWidth(); ++l) {
-                        lg.setRGB(j * sm.getWidth() + l, i * sm.getHeight() + k, sm.getRGB(l, k));
+                unitImage = glyphMap.getGlyph(i, j).getImage();
+                for (int k = 0; k < unitImage.getHeight(); ++k) {
+                    for (int l = 0; l < unitImage.getWidth(); ++l) {
+                        paneImage.setRGB(
+                                colOrigin + (j * unitImage.getWidth() + l),
+                                rowOrigin + (i * unitImage.getHeight() + k),
+                                unitImage.getRGB(l, k)
+                        );
                     }
                 }
             }
         }
-        return lg;
     }
     //todo - lots of methods for conversions
 }
