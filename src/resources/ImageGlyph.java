@@ -1,5 +1,6 @@
 package resources;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ImageGlyph implements Glyph {
@@ -9,6 +10,12 @@ public class ImageGlyph implements Glyph {
 
     ImageGlyph(BufferedImage bi) {
         image = bi;
+    }
+
+    @Override
+    public Color getBaseColor() {
+        //todo - once we update these to work like Simple/Continuum Glyphs, there will be a background color or continuum with base... return this
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -19,6 +19,7 @@ public interface Glyph {
     SimpleGlyph EMPTY_GLYPH = new SimpleGlyph(Color.BLACK, Color.WHITE, ' ');
 
     Random RNG = new Random();
+    Color getBaseColor();
     BufferedImage getImage();
     WordBreak checkBreak();
 }

@@ -36,7 +36,21 @@ public class Zone {
     public int zoneCols() {
         return Renderer.countUnits(getDimension(), mode).width;
     }
-    public void draw(boolean fullScreen, BufferedImage paneImage) {
+
+    /**
+     * Draw the glyphMap glyph by glyph onto the provided image
+     * @param fullScreen indicates the display mode - windowed images are half the size of fullscreen
+     * @param centered indicates the main zone - center the glyphmap on the image and clean up blank edges
+     * @param paneImage the image to be drawn upon
+     */
+    public void draw(boolean fullScreen, boolean centered, BufferedImage paneImage) {
+        //calculate offsets in case the glyphmap doesn't scale precisely to the screen
+        int vOffset = centered ?
+                (paneImage.getHeight() - (zoneRows() * mode.generateContext(fullScreen).imageSize().height)) / 2
+                : 0;
+        int hOffset = centered ?
+                (paneImage.getWidth() - (zoneCols() * mode.generateContext(fullScreen).imageSize().width)) / 2
+                : 0;
         RenderContext rc = mode.generateContext(fullScreen);
         Renderer.setRenderContext(rc);
         BufferedImage unitImage;
@@ -46,8 +60,8 @@ public class Zone {
                 unitImage = glyphMap.getGlyph(i, j).getImage();
                 for (int k = 0; k < unitImage.getHeight(); ++k) {
                     for (int l = 0; l < unitImage.getWidth(); ++l) {
-                        pixelCol = (colOrigin / (fullScreen ? 1 : 2)) + (j * unitImage.getWidth() + l);
-                        pixelRow = (rowOrigin / (fullScreen ? 1 : 2))+ (i * unitImage.getHeight() + k);
+                        pixelCol = hOffset + (colOrigin / (fullScreen ? 1 : 2)) + (j * unitImage.getWidth() + l);
+                        pixelRow = vOffset + (rowOrigin / (fullScreen ? 1 : 2))+ (i * unitImage.getHeight() + k);
                         if (pixelCol >= paneImage.getWidth() || pixelRow >= paneImage.getHeight() || pixelCol < 0 || pixelRow < 0) continue;
                         paneImage.setRGB(
                                 pixelCol,
@@ -58,10 +72,30 @@ public class Zone {
                 }
             }
         }
+        //clean up edges that might be left by centering a glyph map
+        if (centered) {
+            //fill in with the predominant zone color - this should be the base color of the background glyph
+            int rgb = glyphMap.background.getBaseColor().getRGB();
+            for (int i = 0; i < paneImage.getHeight(); ++i) {
+                for (int j = 0; j < paneImage.getWidth(); ++j) {
+                    if (i < vOffset || i >= paneImage.getHeight() - vOffset ||
+                            j < hOffset || j > paneImage.getWidth() - hOffset) {
+                        paneImage.setRGB(j, i, rgb);
+                    }
+                }
+            }
+        }
     }
     public void print(int row, int col, Glyph g) {
         glyphMap.setGlyph(row, col, g);
     }
+
+    /**
+     * Print a string of glyphs.
+     * This is intended for text strings rendered as glyphs, so we do this by parsing the string for individual words.
+     * (Separated by white space - that is, space, tab, or new line)
+     * Wrapping is handled by following the GlyphStringProtocol for this zone.
+     */
     public void print(int row, int col, ArrayList<Glyph> g) {
         ArrayList<Glyph> glyphString = g;
         ArrayList<Glyph> remainder;
