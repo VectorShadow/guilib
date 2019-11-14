@@ -167,5 +167,11 @@ public class Zone {
     public void clear() {
         glyphMap.initialize();
     }
+    public void setBackground(Glyph g){
+        glyphMap.setBackground(g);
+    }
+    public void setBorder(Glyph g) {
+        glyphMap.setBorder(g);
+    }
     //todo - lots of methods for conversions
 }

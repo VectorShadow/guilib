@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 public class ImageGlyph implements Glyph {
 
     private BufferedImage image;
+    //todo - image recoloration to match Simple and Continuum Glyphs - backgroud, primary, secondary, tertiary
 
     ImageGlyph(BufferedImage bi) {
         image = bi;

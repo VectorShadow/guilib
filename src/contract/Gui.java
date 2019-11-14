@@ -2,7 +2,6 @@ package contract;
 
 import resources.Glyph;
 import resources.OutputMode;
-import resources.RenderContext;
 
 import java.util.ArrayList;
 
@@ -40,6 +39,10 @@ public interface Gui {
     void removeZone(int zoneID);
     //resume displaying the specified Zone
     void showZone(int zoneID);
+    //set the background glyph for the specified Zone
+    void setBackground(int zoneID, Glyph g);
+    //set the border glyph for the specified Zone
+    void setBorder(int zoneID, Glyph g);
     /**
      * Output methods.
      * Clear removes Glyphs from the screen.

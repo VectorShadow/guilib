@@ -22,7 +22,7 @@ public class Continuum<E> {
     public E getValue(Random r) {
         double roll = r.nextDouble();
         for (Pair<E> p : pairList) {
-            if (roll > p.probability) return p.element;
+            if (roll < p.probability) return p.element;
         }
         return base;
     }
