@@ -48,11 +48,6 @@ public class SimpleGlyph extends ASCIIImage implements Glyph {
 
     @Override
     public WordBreak checkBreak() {
-        switch (symbol) {
-            case ' ': return WordBreak.SPACE;
-            case '\t': return WordBreak.TAB;
-            case '\n': return WordBreak.RETURN;
-            default: return WordBreak.NO_BREAK;
-        }
+        return WordBreak.evaluate(symbol);
     }
 }

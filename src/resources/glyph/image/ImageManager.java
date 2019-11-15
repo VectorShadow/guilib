@@ -7,42 +7,38 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Manages graphical rendering.
- * todo - handle multiple output modes! right now we assume we can only render tiles.
- * todo - maybe adopt a similar approach to Renderer? static but extensible?
+ * Load tilesets by calling loadGraphics for each render context to be supported, with the corresponding graphics file.
  */
 public class ImageManager {
 
-    //hack - assume tiles only
-    private static BufferedImage imageMapFullscreen = null;
-    private static BufferedImage imageMapWindowed = null;
+    private static HashMap<RenderContext, BufferedImage> tilesets = new HashMap<>();
 
-    //hack - assume tiles only
-    public static void loadGraphics(File fs, File win) throws IOException {
-        imageMapFullscreen = ImageIO.read(fs);
-        imageMapWindowed = ImageIO.read(win);
+    public static void loadGraphics(RenderContext rc, File file) throws IOException {
+        tilesets.put(rc, ImageIO.read(file));
     }
 
-    //todo - this has the right approach to non-tile modes, taking a render context, but still uses the other hacks
     public static BufferedImage imageAt(int row, int col, RenderContext rc) {
+        if (!tilesets.containsKey(rc))
+            throw new IllegalArgumentException("Graphics for RenderContext " + rc + " have not been loaded.");
         Dimension size = rc.imageSize();
-        BufferedImage bi = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage src = tilesets.get(rc);
+        BufferedImage out = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
         for (int i = 0; i < size.height; ++i) {
             for (int j = 0; j < size.width; ++j) {
-                int rgb = (rc.isFullScreen() ? imageMapFullscreen : imageMapWindowed)
-                        .getRGB(j + (col * size.width), i + (row * size.height));
-                bi.setRGB(j, i, rgb);
+                int rgb = (tilesets.get(rc)).getRGB(j + (col * size.width), i + (row * size.height));
+                out.setRGB(j, i, rgb);
             }
         }
-        return bi;
+        return out;
     }
-    //megahack - assume tiles only
-    public static boolean exists(int row, int col) {
-        return 32 * row + 32 <= imageMapFullscreen.getHeight() &&
-                32 * col + 32 <= imageMapFullscreen.getWidth() &&
-                16 * row + 16 <= imageMapWindowed.getHeight() &&
-                16 * col + 16 <= imageMapWindowed.getWidth();
+    public static boolean exists(int row, int col, RenderContext rc) {
+        if (!tilesets.containsKey(rc)) return false;
+        int h = rc.imageSize().height;
+        int w = rc.imageSize().width;
+        return h * row + h <= (tilesets.get(rc)).getHeight() && w * col + w <= (tilesets.get(rc)).getWidth();
     }
 }

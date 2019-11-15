@@ -15,6 +15,7 @@ public abstract class ImageGlyph implements Glyph {
 
     protected int row;
     protected int col;
+    WordBreak wordBreak = WordBreak.NO_BREAK;
 
     protected abstract Color getBackground();
 
@@ -39,9 +40,12 @@ public abstract class ImageGlyph implements Glyph {
         return recolor;
     }
 
+    public void setWordBreak(char c) {
+        wordBreak = WordBreak.evaluate(c);
+    }
+
     @Override
     public WordBreak checkBreak() {
-        //todo - handle images which might represent chars? until then, assume no break
-        return WordBreak.NO_BREAK;
+        return wordBreak;
     }
 }

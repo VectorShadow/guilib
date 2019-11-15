@@ -16,7 +16,16 @@ public interface Glyph {
         NO_BREAK,
         SPACE,
         TAB,
-        RETURN
+        RETURN;
+
+        public static WordBreak evaluate(char c) {
+            switch (c) {
+                case ' ': return WordBreak.SPACE;
+                case '\t': return WordBreak.TAB;
+                case '\n': return WordBreak.RETURN;
+                default: return WordBreak.NO_BREAK;
+            }
+        }
     }
     SimpleGlyph EMPTY_GLYPH = new SimpleGlyph(Color.BLACK, Color.WHITE, ' ');
 

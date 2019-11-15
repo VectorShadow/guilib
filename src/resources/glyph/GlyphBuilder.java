@@ -8,6 +8,7 @@ import resources.glyph.image.ImageGlyph;
 import resources.continuum.Pair;
 import resources.glyph.image.ImageManager;
 import resources.glyph.image.SimpleImageGlyph;
+import resources.render.OutputMode;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -45,6 +46,18 @@ public class GlyphBuilder {
         return new GlyphBuilder();
     }
 
+    /**
+     * Set the default properties for this glyph.
+     * This is all the information required to build a SimpleGlyph.
+     * ContinuumGlyphs will use the defaults as the base values for each Continuum.
+     * ImageGlyphs will use all provided values, and derive non-provided values as necessary -
+     * for example, an ImageGlyph with defaults for primary and secondary but not tertiary will simply
+     * use the secondary value as the tertiary(that is, it will map both secondary and tertiary fields
+     * from the source image to a single color).
+     * ImageGlyphs use the provided symbol for two purposes - first, to generate an ASCII-style glyph if
+     * no corresponding source image can be found by the ImageManager, and second, to indicate WordBreak
+     * status if set in a Zone which requires this information.
+     */
     public GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
         return setDefaults(defaultBackground, defaultForeground, defaultForeground, defaultSymbol);
     }
@@ -96,6 +109,10 @@ public class GlyphBuilder {
         this.sym.add(sym);
         return this;
     }
+
+    /**
+     * Complete the building of an ASCII-only Glyph.
+     */
     public Glyph build(){
         if (bg.size() == 1 && fp.size() == 1 && sym.size() == 1){
             return new SimpleGlyph(bg0, fp0, sym0);
@@ -106,19 +123,34 @@ public class GlyphBuilder {
                 new Continuum<>(sym0, sym)
         );
     }
-    public Glyph build(int row, int col){
-        if (!ImageManager.exists(row, col)) return build();
+
+    /**
+     * Complete the building of an ImageGlyph.
+     * If no graphics have been loaded for the RenderContext corresponding to the specified OutputMode
+     * (in fullscreen), or that tileset does not contain an image at the specified row and column,
+     * an ASCII-only glyph will be built instead.
+     *
+     * Note that the tilesets corresponding to fullscreen and windowed RenderContexts for all Output Modes
+     * must be maintained in parallel, or undefined behavior can occur.
+     */
+    public Glyph build(int row, int col, OutputMode mode){
+        if (!ImageManager.exists(row, col, mode.generateContext(true))) return build();
+        ImageGlyph ig;
         if (bg.size() == 1 && fp.size() == 1 && fs.size() <= 1 && ft.size() <= 1){
-            return new SimpleImageGlyph(bg0, fp0, fs0, ft0, row, col);
+            ig = new SimpleImageGlyph(bg0, fp0, fs0, ft0, row, col);
         }
-        return new ContinuumImageGlyph(
-                new Continuum<>(bg0, bg),
-                new Continuum<>(fp0, fp),
-                new Continuum<>(fs0, fs),
-                new Continuum<>(ft0, ft),
-                row,
-                col
-        );
+        else {
+            ig = new ContinuumImageGlyph(
+                    new Continuum<>(bg0, bg),
+                    new Continuum<>(fp0, fp),
+                    new Continuum<>(fs0, fs),
+                    new Continuum<>(ft0, ft),
+                    row,
+                    col
+            );
+        }
+        ig.setWordBreak(sym0);
+        return ig;
     }
 
 }
