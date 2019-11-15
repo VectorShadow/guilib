@@ -44,4 +44,9 @@ public class ContinuumImageGlyph extends ImageGlyph {
     public Color getBaseColor() {
         return background.getBase();
     }
+
+    @Override
+    public Color getFaceColor() {
+        return primary.getBase();
+    }
 }

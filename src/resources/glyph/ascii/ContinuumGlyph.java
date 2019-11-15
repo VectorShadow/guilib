@@ -41,6 +41,11 @@ public class ContinuumGlyph extends ASCIIImage implements Glyph {
     }
 
     @Override
+    public Color getFaceColor() {
+        return foreground.getBase();
+    }
+
+    @Override
     public BufferedImage getImage() {
         return render();
     }

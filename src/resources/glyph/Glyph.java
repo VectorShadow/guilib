@@ -31,6 +31,7 @@ public interface Glyph {
 
     Random RNG = new Random();
     Color getBaseColor();
+    Color getFaceColor();
     BufferedImage getImage();
     WordBreak checkBreak();
 }

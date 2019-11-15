@@ -41,4 +41,9 @@ public class SimpleImageGlyph extends ImageGlyph {
     public Color getBaseColor() {
         return background;
     }
+
+    @Override
+    public Color getFaceColor() {
+        return primary;
+    }
 }

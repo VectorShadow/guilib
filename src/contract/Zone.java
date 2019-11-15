@@ -1,6 +1,7 @@
 package contract;
 
 import resources.glyph.Glyph;
+import resources.glyph.GlyphBuilder;
 import resources.glyph.GlyphMap;
 import resources.glyph.GlyphStringProtocol;
 import resources.render.OutputMode;
@@ -114,6 +115,8 @@ public class Zone {
         Point printCursor = new Point(col, row);
         validate(printCursor);
         boolean done = false;
+        int charCount = 0;
+        int maxChars = mode.getGlyphStringProtocol().getMaxLength();
         do {
             //reset temporary values
             stringIndex = 0;
@@ -149,6 +152,10 @@ public class Zone {
             }
             //print each glyph in the current word, moving the cursor accordingly
             for (Glyph glyph : nextWord) {
+                //if we would exceed the character limit, stop
+                if (++charCount > maxChars) {
+                    break;
+                }
                 print(printCursor.y, printCursor.x, glyph);
                 printCursor = advanceCursor(printCursor, 1);
             }
@@ -162,6 +169,17 @@ public class Zone {
             }
             //check that the cursor is still on a valid line
             if (!validLine(printCursor.y, totalLines)) done = true;
+            // count the break char
+            // if count now exceeds the limit(and we aren't already done),
+            // print a special char colored from the current word and stop
+            if (++charCount >= maxChars && !done) {
+                print(printCursor.y, printCursor.x, GlyphBuilder.buildGlyph().setDefaults(
+                        nextWord.get(0).getBaseColor(),
+                        nextWord.get(0).getFaceColor(),
+                        OutputMode.LIMIT_BREAK
+                ).build());
+                done = true;
+            }
         } while (!done);
     }
     /**
