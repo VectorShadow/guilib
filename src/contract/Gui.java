@@ -1,7 +1,7 @@
 package contract;
 
-import resources.Glyph;
-import resources.OutputMode;
+import resources.glyph.Glyph;
+import resources.render.OutputMode;
 
 import java.util.ArrayList;
 

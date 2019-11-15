@@ -1,4 +1,11 @@
-package resources;
+package contract;
+
+import resources.glyph.Glyph;
+import resources.glyph.GlyphMap;
+import resources.glyph.GlyphStringProtocol;
+import resources.render.OutputMode;
+import resources.render.RenderContext;
+import resources.render.Renderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -55,8 +62,8 @@ public class Zone {
         Renderer.setRenderContext(rc);
         BufferedImage unitImage;
         int pixelRow, pixelCol;
-        for (int i = 0; i < glyphMap.rows; ++i) {
-            for (int j = 0; j < glyphMap.cols; ++j) {
+        for (int i = 0; i < glyphMap.getRows(); ++i) {
+            for (int j = 0; j < glyphMap.getCols(); ++j) {
                 unitImage = glyphMap.getGlyph(i, j).getImage();
                 for (int k = 0; k < unitImage.getHeight(); ++k) {
                     for (int l = 0; l < unitImage.getWidth(); ++l) {
@@ -75,7 +82,7 @@ public class Zone {
         //clean up edges that might be left by centering a glyph map
         if (centered) {
             //fill in with the predominant zone color - this should be the base color of the background glyph
-            int rgb = glyphMap.background.getBaseColor().getRGB();
+            int rgb = glyphMap.getBackground().getBaseColor().getRGB();
             for (int i = 0; i < paneImage.getHeight(); ++i) {
                 for (int j = 0; j < paneImage.getWidth(); ++j) {
                     if (i < vOffset || i >= paneImage.getHeight() - vOffset ||

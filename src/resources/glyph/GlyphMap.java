@@ -1,4 +1,6 @@
-package resources;
+package resources.glyph;
+
+import resources.glyph.Glyph;
 
 public class GlyphMap {
     final int rows, cols;
@@ -35,5 +37,21 @@ public class GlyphMap {
     public void setBorder(Glyph g) {
         border = g;
         initialize();
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public Glyph getBackground() {
+        return background;
+    }
+
+    public Glyph getBorder() {
+        return border;
     }
 }

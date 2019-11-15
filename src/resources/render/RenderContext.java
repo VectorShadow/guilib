@@ -1,4 +1,4 @@
-package resources;
+package resources.render;
 
 import java.awt.*;
 
@@ -9,7 +9,7 @@ public abstract class RenderContext {
     /**
      * Unique id for this RenderContext.
      */
-    final int ID;
+    protected final int ID;
 
     protected RenderContext(int id){
         ID = id;
@@ -21,6 +21,7 @@ public abstract class RenderContext {
     public abstract Dimension imageSize();
     public abstract Font imageFont();
     public abstract OutputMode outputMode();
+    public abstract boolean isFullScreen();
 
     @Override
     public boolean equals(Object o) {

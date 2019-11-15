@@ -1,4 +1,7 @@
-package resources;
+package resources.glyph.ascii;
+
+import resources.continuum.Continuum;
+import resources.glyph.Glyph;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -6,12 +9,12 @@ import java.awt.image.BufferedImage;
 /**
  * A complex Glyph which renders non-deterministically from a pre-set selection of possible colors and symbols.
  */
-public class ContinuumGlyph extends ASCIIImage implements Glyph{
+public class ContinuumGlyph extends ASCIIImage implements Glyph {
     Continuum<Color> background;
     Continuum<Color> foreground;
     Continuum<Character> symbol;
 
-    ContinuumGlyph(Continuum<Color> b, Continuum<Color> f, Continuum<Character> s) {
+    public ContinuumGlyph(Continuum<Color> b, Continuum<Color> f, Continuum<Character> s) {
         background = b;
         foreground = f;
         symbol = s;
@@ -34,7 +37,7 @@ public class ContinuumGlyph extends ASCIIImage implements Glyph{
 
     @Override
     public Color getBaseColor() {
-        return background.base;
+        return background.getBase();
     }
 
     @Override
@@ -44,7 +47,7 @@ public class ContinuumGlyph extends ASCIIImage implements Glyph{
 
     @Override
     public WordBreak checkBreak() {
-        switch (symbol.base) {
+        switch (symbol.getBase()) {
             case ' ': return WordBreak.SPACE;
             case '\t': return WordBreak.TAB;
             case '\n': return WordBreak.RETURN;

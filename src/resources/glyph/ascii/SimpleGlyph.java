@@ -1,4 +1,6 @@
-package resources;
+package resources.glyph.ascii;
+
+import resources.glyph.Glyph;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +15,7 @@ public class SimpleGlyph extends ASCIIImage implements Glyph {
     Color foreground;
     char symbol;
 
-    SimpleGlyph(Color b, Color f, char s){
+    public SimpleGlyph(Color b, Color f, char s){
         background = b;
         foreground = f;
         symbol = s;

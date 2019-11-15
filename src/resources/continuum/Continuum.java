@@ -1,4 +1,4 @@
-package resources;
+package resources.continuum;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -32,5 +32,9 @@ public class Continuum<E> {
         public int compare(Pair<E> o1, Pair<E> o2) {
             return Double.compare(o1.probability, o2.probability);
         }
+    }
+
+    public E getBase() {
+        return base;
     }
 }

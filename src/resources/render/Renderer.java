@@ -1,4 +1,4 @@
-package resources;
+package resources.render;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +19,9 @@ public class Renderer extends JLabel {
     }
     public static void setRenderContext(RenderContext rc) {
         staticRenderContext = rc;
+    }
+    public static RenderContext getRenderContext() {
+        return staticRenderContext;
     }
     private BufferedImage renderImage(Color background, Color foreground, char symbol) {
         setBackground(background);

@@ -1,4 +1,6 @@
-package resources;
+package resources.glyph;
+
+import resources.glyph.ascii.SimpleGlyph;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

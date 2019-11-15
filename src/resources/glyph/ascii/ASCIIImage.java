@@ -1,4 +1,6 @@
-package resources;
+package resources.glyph.ascii;
+
+import resources.render.Renderer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package resources;
+package resources.continuum;
 
 /**
  * A pair consisting of an element and the probability for that element

@@ -1,4 +1,4 @@
-package resources;
+package resources.glyph;
 
 /**
  * Defines how a Zone handles Glyph string printing.
