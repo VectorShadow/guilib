@@ -1,9 +1,6 @@
 package contract;
 
-import resources.glyph.Glyph;
-import resources.glyph.GlyphBuilder;
-import resources.glyph.GlyphMap;
-import resources.glyph.GlyphStringProtocol;
+import resources.glyph.*;
 import resources.render.OutputMode;
 import resources.render.RenderContext;
 import resources.render.Renderer;
@@ -173,11 +170,13 @@ public class Zone {
             // if count now exceeds the limit(and we aren't already done),
             // print a special char colored from the current word and stop
             if (++charCount >= maxChars && !done) {
-                print(printCursor.y, printCursor.x, GlyphBuilder.buildGlyph().setDefaults(
-                        nextWord.get(0).getBaseColor(),
-                        nextWord.get(0).getFaceColor(),
-                        OutputMode.LIMIT_BREAK
-                ).build());
+                print(printCursor.y, printCursor.x, GlyphBuilder.build(
+                        ProtoGlyphBuilder.setDefaults(
+                                OutputMode.LIMIT_BREAK,
+                                nextWord.get(0).getBaseColor(),
+                                nextWord.get(0).getFaceColor()
+                        ).build()
+                ));
                 done = true;
             }
         } while (!done);

@@ -1,7 +1,6 @@
 package resources.glyph;
 
 import resources.continuum.Pair;
-import resources.glyph.ProtoGlyph;
 
 import java.awt.*;
 

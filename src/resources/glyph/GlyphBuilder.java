@@ -42,7 +42,7 @@ public class GlyphBuilder {
         sym = new ArrayList<>();
     }
 
-    public static GlyphBuilder buildGlyph(){
+    private static GlyphBuilder buildGlyph(){
         return new GlyphBuilder();
     }
 
@@ -58,10 +58,10 @@ public class GlyphBuilder {
      * no corresponding source image can be found by the ImageManager, and second, to indicate WordBreak
      * status if set in a Zone which requires this information.
      */
-    public GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
+    private GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
         return setDefaults(defaultBackground, defaultForeground, defaultForeground, defaultSymbol);
     }
-    public GlyphBuilder setDefaults(
+    private GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -69,7 +69,7 @@ public class GlyphBuilder {
     ){
         return setDefaults(defaultBackground, defaultPrimary, defaultSecondary, defaultSecondary, defaultSymbol);
     }
-    public GlyphBuilder setDefaults(
+    private GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -84,28 +84,28 @@ public class GlyphBuilder {
         return this;
     }
 
-    public GlyphBuilder addBackgroundColor(Pair<Color> bc) {
+    private GlyphBuilder addBackgroundColor(Pair<Color> bc) {
         bg.add(bc);
         return this;
     }
 
-    public GlyphBuilder addForegroundColor(Pair<Color> fc) {
+    private GlyphBuilder addForegroundColor(Pair<Color> fc) {
         fp.add(fc);
         return this;
     }
-    public GlyphBuilder addPrimaryColor(Pair<Color> pc) {
+    private GlyphBuilder addPrimaryColor(Pair<Color> pc) {
         return addForegroundColor(pc);
     }
-    public GlyphBuilder addSecondaryColor(Pair<Color> sc) {
+    private GlyphBuilder addSecondaryColor(Pair<Color> sc) {
         fs.add(sc);
         return this;
     }
-    public GlyphBuilder addTertiaryColor(Pair<Color> tc) {
+    private GlyphBuilder addTertiaryColor(Pair<Color> tc) {
         fs.add(tc);
         return this;
     }
 
-    public GlyphBuilder addSymbol(Pair<Character> sym) {
+    private GlyphBuilder addSymbol(Pair<Character> sym) {
         this.sym.add(sym);
         return this;
     }
@@ -113,7 +113,7 @@ public class GlyphBuilder {
     /**
      * Complete the building of an ASCII-only Glyph.
      */
-    public Glyph build(){
+    private Glyph build(){
         if (bg.size() == 1 && fp.size() == 1 && sym.size() == 1){
             return new SimpleGlyph(bg0, fp0, sym0);
         }
@@ -133,7 +133,7 @@ public class GlyphBuilder {
      * Note that the tilesets corresponding to fullscreen and windowed RenderContexts for all Output Modes
      * must be maintained in parallel, or undefined behavior can occur.
      */
-    public Glyph build(int row, int col, OutputMode mode){
+    private Glyph build(int row, int col, OutputMode mode){
         if (!ImageManager.exists(row, col, mode.generateContext(true))) return build();
         ImageGlyph ig;
         if (bg.size() == 1 && fp.size() == 1 && fs.size() <= 1 && ft.size() <= 1){
@@ -151,6 +151,28 @@ public class GlyphBuilder {
         }
         ig.setWordBreak(sym0);
         return ig;
+    }
+    private static GlyphBuilder partialBuild(ProtoGlyph protoGlyph) {
+        GlyphBuilder gb = GlyphBuilder.buildGlyph().setDefaults(
+                protoGlyph.baseBackground,
+                protoGlyph.basePrimary,
+                protoGlyph.baseSecondary,
+                protoGlyph.baseTertiary,
+                protoGlyph.baseSymbol);
+        for (Pair<Character> symPair : protoGlyph.symbols) gb.addSymbol(symPair);
+        for (Pair<Color> bgPair : protoGlyph.backgrounds) gb.addBackgroundColor(bgPair);
+        for (Pair<Color> pPair : protoGlyph.primaries) gb.addPrimaryColor(pPair);
+        for (Pair<Color> sPair : protoGlyph.secondaries) gb.addSecondaryColor(sPair);
+        for (Pair<Color> tPair : protoGlyph.tertiaries) gb.addTertiaryColor(tPair);
+        return gb;
+    }
+    public static Glyph build(ProtoGlyph protoGlyph) {
+        return partialBuild(protoGlyph).build();
+    }
+    public static Glyph build(ProtoGlyph protoGlyph, OutputMode mode) {
+        if (protoGlyph.allowGraphics())
+            return partialBuild(protoGlyph).build(protoGlyph.imageRow, protoGlyph.imageCol, mode);
+        else return build(protoGlyph);
     }
 
 }
