@@ -32,7 +32,7 @@ public class Zone {
                 zoneCols()
         );
     }
-    public Dimension getDimension() {
+    private Dimension getDimension() {
         return new Dimension(numCols, numRows);
     }
     public int zoneRows() {
