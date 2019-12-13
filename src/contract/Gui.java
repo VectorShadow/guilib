@@ -68,12 +68,12 @@ public interface Gui {
      * Information methods.
      */
     //get the number of rows in the gui
-    Dimension countRows();
+    int countRows();
     //get the number of columns in the gui
-    Dimension countColumns();
+    int countColumns();
     //get the number of rows in the specified zone
-    Dimension countRows(int zone);
+    int countRows(int zone);
     //get the number of columns in the specified zone
-    Dimension countColumns(int zone);
+    int countColumns(int zone);
 
 }
