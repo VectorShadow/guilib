@@ -20,6 +20,9 @@ public class ImageManager {
     public static void loadGraphics(RenderContext rc, File file) throws IOException {
         tilesets.put(rc, ImageIO.read(file));
     }
+    public static boolean hasGraphics() {
+        return !tilesets.isEmpty();
+    }
 
     public static BufferedImage imageAt(int row, int col, RenderContext rc) {
         if (!tilesets.containsKey(rc))

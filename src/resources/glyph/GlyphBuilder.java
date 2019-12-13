@@ -170,7 +170,7 @@ public class GlyphBuilder {
         return partialBuild(protoGlyph).build();
     }
     public static Glyph build(ProtoGlyph protoGlyph, OutputMode mode) {
-        if (protoGlyph.allowGraphics())
+        if (ImageManager.hasGraphics() && protoGlyph.allowGraphics())
             return partialBuild(protoGlyph).build(protoGlyph.imageRow, protoGlyph.imageCol, mode);
         else return build(protoGlyph);
     }
