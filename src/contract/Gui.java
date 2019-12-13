@@ -3,6 +3,7 @@ package contract;
 import resources.glyph.Glyph;
 import resources.render.OutputMode;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -63,4 +64,12 @@ public interface Gui {
     void print(int zone, int row, int col, ArrayList<Glyph> g);
     //draw all currently set Glyphs to the monitor
     void redraw();
+    /**
+     * Information methods.
+     */
+    //get the Dimension of the gui
+    Dimension getDimension();
+    //get the Dimension of a specific zone
+    Dimension getDimension(int zone);
+
 }
