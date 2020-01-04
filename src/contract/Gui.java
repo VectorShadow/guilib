@@ -4,6 +4,7 @@ import resources.glyph.Glyph;
 import resources.render.OutputMode;
 
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 /**
@@ -44,6 +45,8 @@ public interface Gui {
     void setBackground(int zoneID, Glyph g);
     //set the border glyph for the specified Zone
     void setBorder(int zoneID, Glyph g);
+    //add a KeyListener to this GUI
+    void addKeyListener(KeyListener kl);
     /**
      * Output methods.
      * Clear removes Glyphs from the screen.
