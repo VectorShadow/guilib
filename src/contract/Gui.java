@@ -27,8 +27,8 @@ public interface Gui {
      * Setup methods.
      *
      */
-    //add a zone with the specified parameters
-    public void addZone(
+    //add a zone with the specified parameters, and return the number of zones now
+    public int addZone(
             double verticalOriginPct,
             double verticalSizePct,
             double horizontalOriginPct,
