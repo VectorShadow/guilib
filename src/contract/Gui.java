@@ -74,6 +74,10 @@ public interface Gui {
     void printCentered(int zone, int row, GlyphString gs);
     //draw all currently set Glyphs to the monitor
     void redraw();
+    //set an icon image for the windowed frame
+    void setIcon(String pathToIconImage);
+    //set a title for the windowed frame
+    void setTitle(String title);
     /**
      * Information methods.
      */
