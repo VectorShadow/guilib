@@ -5,5 +5,5 @@ package contract.menu;
  */
 public interface MenuHandler {
     void handleExit();
-    void handleSelection();
+    void handleSelection(int selectedIndex);
 }
