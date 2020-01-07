@@ -1,6 +1,7 @@
 package contract;
 
 import resources.glyph.Glyph;
+import resources.glyph.image.GlyphString;
 import resources.render.OutputMode;
 
 import java.awt.*;
@@ -62,11 +63,15 @@ public interface Gui {
     //set a Glyph on the screen
     void print(int row, int col, Glyph g);
     //set a String of Glyphs on the screen
-    void print(int row, int col, ArrayList<Glyph> g);
+    void print(int row, int col, GlyphString gs);
     //set a Glyph in a specific Zone
     void print(int zone, int row, int col, Glyph g);
     //set a String of Glyphs in a specific Zone
-    void print(int zone, int row, int col, ArrayList<Glyph> g);
+    void print(int zone, int row, int col, GlyphString gs);
+    //set a String of Glyphs aligned to the center of the screen
+    void printCentered(int row, ArrayList<Glyph> g);
+    //set a String of Glyphs aligned to the center of the zone
+    void printCentered(int zone, int row, GlyphString gs);
     //draw all currently set Glyphs to the monitor
     void redraw();
     /**
@@ -80,5 +85,12 @@ public interface Gui {
     int countRows(int zone);
     //get the number of columns in the specified zone
     int countColumns(int zone);
-
+    //get the row index for a certain percentage of the screen
+    int rowAtPercent(double percent);
+    //get the column index for a certain percentage of the screen
+    int colAtPercent(double percent);
+    //get the row index for a certain percentage of the zone
+    int rowAtPercent(int zone, double percent);
+    //get the column index for a certain percentage of the zone
+    int colAtPercent(int zone, double percent);
 }

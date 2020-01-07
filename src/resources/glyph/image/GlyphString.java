@@ -8,8 +8,43 @@ import resources.glyph.ProtoGlyphBuilder;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Support the List-based concept of GlyphStrings.
+ */
 public class GlyphString {
-    public static ArrayList<Glyph> build(
+    ArrayList<Glyph> glyphString;
+    String text;
+    Color defaultBackground;
+    Color defaultForeground;
+    ArrayList<Pair<Color>> additionalBackgrounds;
+    ArrayList<Pair<Color>> additionalForegrounds;
+
+    public GlyphString(String t, Color dbg, Color dfg, ArrayList<Pair<Color>> abg, ArrayList<Pair<Color>> afg) {
+        text = t;
+        defaultBackground = dbg;
+        defaultForeground = dfg;
+        additionalBackgrounds = abg;
+        additionalForegrounds = afg;
+        glyphString = build(text, defaultBackground, defaultForeground, additionalBackgrounds, additionalForegrounds);
+    }
+    public GlyphString(String t, Color dbg, Color dfg) {
+        this(t, dbg, dfg, new ArrayList<>(), new ArrayList<>());
+    }
+    public int size() {
+        return glyphString.size();
+    }
+    public ArrayList<Glyph> asList(){
+        return glyphString;
+    }
+    public GlyphString subGlyphString(int startInclusive, int endExclusive) {
+        String s0 = "";
+        for (Glyph g : this.asList()) s0 += g.getBaseChar();
+        String s1 = s0.substring(startInclusive, endExclusive);
+        return new GlyphString(s1, defaultBackground, defaultForeground, additionalBackgrounds, additionalForegrounds);
+    }
+
+
+    private static ArrayList<Glyph> build(
             String text,
             Color defaultBackground,
             Color defaultForeground,
@@ -36,7 +71,7 @@ public class GlyphString {
         }
         return glyphString;
     }
-    public static ArrayList<Glyph> build(
+    private static ArrayList<Glyph> build(
             String text,
             Color defaultBackground,
             Color defaultForeground

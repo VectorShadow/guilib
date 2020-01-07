@@ -37,6 +37,11 @@ public class SimpleGlyph extends ASCIIImage implements Glyph {
     }
 
     @Override
+    public char getBaseChar() {
+        return getSymbol();
+    }
+
+    @Override
     public Color getBaseColor() {
         return background;
     }

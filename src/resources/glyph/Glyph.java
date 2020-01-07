@@ -30,6 +30,7 @@ public interface Glyph {
     SimpleGlyph EMPTY_GLYPH = new SimpleGlyph(Color.BLACK, Color.WHITE, ' ');
 
     Random RNG = new Random();
+    char getBaseChar();
     Color getBaseColor();
     Color getFaceColor();
     BufferedImage getImage();

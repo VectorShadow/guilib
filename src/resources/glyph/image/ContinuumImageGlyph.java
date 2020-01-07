@@ -41,6 +41,11 @@ public class ContinuumImageGlyph extends ImageGlyph {
     }
 
     @Override
+    public char getBaseChar() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Color getBaseColor() {
         return background.getBase();
     }

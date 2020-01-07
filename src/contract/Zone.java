@@ -1,6 +1,7 @@
 package contract;
 
 import resources.glyph.*;
+import resources.glyph.image.GlyphString;
 import resources.render.OutputMode;
 import resources.render.RenderContext;
 import resources.render.Renderer;
@@ -101,8 +102,8 @@ public class Zone {
      * (Separated by white space - that is, space, tab, or new line)
      * Wrapping is handled by following the GlyphStringProtocol for this zone.
      */
-    public void print(int row, int col, ArrayList<Glyph> g) {
-        ArrayList<Glyph> glyphString = g;
+    public void print(int row, int col, GlyphString gs) {
+        ArrayList<Glyph> glyphString = gs.asList();
         ArrayList<Glyph> remainder;
         ArrayList<Glyph> nextWord;
         Glyph nextGlyph;
