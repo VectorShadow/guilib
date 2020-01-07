@@ -1,5 +1,6 @@
 package contract;
 
+import contract.menu.Menu;
 import resources.glyph.Glyph;
 import resources.glyph.image.GlyphString;
 import resources.render.OutputMode;
@@ -78,6 +79,10 @@ public interface Gui {
     void setIcon(String pathToIconImage);
     //set a title for the windowed frame
     void setTitle(String title);
+    //print a centered menu
+    void printMenu(int row, Menu menu, Color background, Color foreground);
+    //print a centered menu in the specified zone
+    void printMenu(int zone, int row, Menu menu, Color background, Color foreground);
     /**
      * Information methods.
      */

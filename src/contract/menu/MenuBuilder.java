@@ -26,7 +26,7 @@ public class MenuBuilder {
         ArrayList<MenuOption> menuOptions = menu.getOptions();
         for (int i = 0; i < menuOptions.size(); ++i) {
             if (menuOptions.get(i).isEnabled()) { //find the first enabled option and set it as the selected option
-                menu.setSelectedOption(i);
+                menu.setSelectedOptionIndex(i);
                 break;
             }
         }

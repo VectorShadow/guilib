@@ -34,8 +34,8 @@ public class Menu implements Iterable<MenuOption>{
     }
 
     private String title;
-    private ArrayList<MenuOption> options;
-    private int selectedOption = -1;
+    private ArrayList<MenuOption> options = new ArrayList<>();
+    private int selectedOptionIndex = -1;
     int enabledCount = 0;
     MenuHandler menuHandler = null;
 
@@ -53,9 +53,10 @@ public class Menu implements Iterable<MenuOption>{
     void setMenuHandler(MenuHandler mh) {
         menuHandler = mh;
     }
-    void setSelectedOption(int option){
-        if (option < 0 || option >= options.size())
-            throw new IllegalArgumentException("Option " + option + " out of range: 0-" +  (options.size() - 1));
+    void setSelectedOptionIndex(int optionIndex){
+        if (optionIndex < 0 || optionIndex >= options.size())
+            throw new IllegalArgumentException("Option " + optionIndex + " out of range: 0-" +  (options.size() - 1));
+        selectedOptionIndex = optionIndex;
     }
     ArrayList<MenuOption> getOptions() {
         return options;
@@ -68,23 +69,26 @@ public class Menu implements Iterable<MenuOption>{
         if (enabledCount <= 1 && !enabled) return; //don't disable the last option
         enabledCount = enabled ? enabledCount + 1 : enabledCount - 1; //update our count
         options.get(optionIndex).setEnabled(enabled); //update the option;
-        if (selectedOption == optionIndex && !enabled) advance(); //never disable the selected option
+        if (selectedOptionIndex == optionIndex && !enabled) advance(); //never disable the selected option
     }
     public void advance(){
         if (enabledCount <= 1) return; //nothing to do
         do {
-            ++selectedOption; //update the selected index
-            if (selectedOption >= options.size()) selectedOption = 0; //loop back to the top
-        } while (!options.get(selectedOption).isEnabled()); //don't stop on a disabled option
+            ++selectedOptionIndex; //update the selected index
+            if (selectedOptionIndex >= options.size()) selectedOptionIndex = 0; //loop back to the top
+        } while (!options.get(selectedOptionIndex).isEnabled()); //don't stop on a disabled option
     }
     public void regress(){
         if (enabledCount <= 1) return; //nothing to do
         do {
-            --selectedOption; //update the selected index
-            if (selectedOption < 0) selectedOption = options.size() - 1; //loop back to the bottom
-        } while (!options.get(selectedOption).isEnabled()); //don't stop on a disabled option
+            --selectedOptionIndex; //update the selected index
+            if (selectedOptionIndex < 0) selectedOptionIndex = options.size() - 1; //loop back to the bottom
+        } while (!options.get(selectedOptionIndex).isEnabled()); //don't stop on a disabled option
     }
     public int size() {
         return options.size();
+    }
+    public int getSelectedOptionIndex() {
+        return selectedOptionIndex;
     }
 }
