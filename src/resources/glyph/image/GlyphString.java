@@ -30,6 +30,19 @@ public class GlyphString {
     public GlyphString(String t, Color dbg, Color dfg) {
         this(t, dbg, dfg, new ArrayList<>(), new ArrayList<>());
     }
+
+    /**
+     * Concatenation constructor.
+     * Creates a combined list of glyphs without construction data.
+     * Used for combining glyphstrings with different data into a single string that retains the
+     * individual glyph properties of its components.
+     * Calls to subGlyphString will fail.
+     */
+    public GlyphString(GlyphString base, GlyphString appended) {
+        ArrayList<Glyph> concatenatedGlyphList = new ArrayList<>();
+        for (Glyph g : base.asList()) concatenatedGlyphList.add(g);
+        for (Glyph g : appended.asList()) concatenatedGlyphList.add(g);
+    }
     public int size() {
         return glyphString.size();
     }
@@ -42,7 +55,6 @@ public class GlyphString {
         String s1 = s0.substring(startInclusive, endExclusive);
         return new GlyphString(s1, defaultBackground, defaultForeground, additionalBackgrounds, additionalForegrounds);
     }
-
 
     private static ArrayList<Glyph> build(
             String text,
