@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Framework for implementing generic menus.
+ * Framework for implementing generic io.menus.
  */
 public class Menu implements Iterable<MenuOption>{
 

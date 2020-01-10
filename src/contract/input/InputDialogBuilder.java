@@ -16,14 +16,25 @@ public class InputDialogBuilder {
     public InputDialogBuilder setColors(
             Color promptBackground,
             Color promptForeground,
+            Color promptHighlight,
             Color responseBackground,
             Color responseForeground
     ) {
-        inputDialog.setColors(promptBackground, promptForeground, responseBackground, responseForeground);
+        inputDialog.setColors(promptBackground, promptForeground, promptHighlight, responseBackground, responseForeground);
         return this;
     }
-    public InputDialogBuilder addInputDialogField(String prompt, int maxResponseLength, boolean hideResponse) {
-        inputDialog.addInputDialogField(new InputDialogField(prompt, maxResponseLength, hideResponse));
+    public InputDialogBuilder addInputDialogField(
+            String prompt,
+            int maxResponseLength,
+            boolean hideResponse,
+            boolean defaultEnabled
+    ) {
+        int fieldIndex = inputDialog.addInputDialogField(new InputDialogField(prompt, maxResponseLength, hideResponse));
+        inputDialog.setEnabledField(fieldIndex, defaultEnabled);
+        return this;
+    }
+    public InputDialogBuilder addInputDialogField(InputDialogField idf) {
+        inputDialog.addInputDialogField(idf);
         return this;
     }
     public InputDialog build() {

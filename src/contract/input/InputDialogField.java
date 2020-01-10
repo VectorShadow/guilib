@@ -43,4 +43,11 @@ public class InputDialogField {
     public String getResponse() {
         return response;
     }
+    public String displayResponse() {
+        String display = "";
+        for (int i = 0; i < maxResponseLength; ++i) {
+            display += i < response.length() ? hidden ? '*' : response.charAt(i) : '_';
+        }
+        return display;
+    }
 }

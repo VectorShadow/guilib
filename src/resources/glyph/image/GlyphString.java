@@ -39,9 +39,9 @@ public class GlyphString {
      * Calls to subGlyphString will fail.
      */
     public GlyphString(GlyphString base, GlyphString appended) {
-        ArrayList<Glyph> concatenatedGlyphList = new ArrayList<>();
-        for (Glyph g : base.asList()) concatenatedGlyphList.add(g);
-        for (Glyph g : appended.asList()) concatenatedGlyphList.add(g);
+        glyphString = new ArrayList<>();
+        for (Glyph g : base.asList()) glyphString.add(g);
+        for (Glyph g : appended.asList()) glyphString.add(g);
     }
     public int size() {
         return glyphString.size();
