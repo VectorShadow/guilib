@@ -45,7 +45,7 @@ public class Zone {
 
     /**
      * Draw the glyphMap glyph by glyph onto the provided image
-     * @param fullScreen indicates the display mode - windowed images are half the size of fullscreen
+     * @param fullScreen indicates the io.display mode - windowed images are half the size of fullscreen
      * @param centered indicates the main zone - center the glyphmap on the image and clean up blank edges
      * @param paneImage the image to be drawn upon
      */

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * A Glyph is an object used to display to the screen.
+ * A Glyph is an object used to io.display to the screen.
  * It renders a colored character on a colored background.
  */
 

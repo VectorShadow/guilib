@@ -41,7 +41,7 @@ public class Renderer extends JLabel {
     }
 
     /**
-     * Get the size of the display in pixels.
+     * Get the size of the io.display in pixels.
      */
     public static Dimension countPixels() {
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
@@ -55,7 +55,7 @@ public class Renderer extends JLabel {
         return renderContext.imageSize();
     }
     /**
-     * Count the number of units for the given OutputMode which would completely fill the display.
+     * Count the number of units for the given OutputMode which would completely fill the io.display.
      */
     public static Dimension countUnits(OutputMode om) {
         return countUnits(countPixels(), om);
