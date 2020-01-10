@@ -85,7 +85,7 @@ public class Zone {
             for (int i = 0; i < paneImage.getHeight(); ++i) {
                 for (int j = 0; j < paneImage.getWidth(); ++j) {
                     if (i < vOffset || i >= paneImage.getHeight() - vOffset ||
-                            j < hOffset || j > paneImage.getWidth() - hOffset) {
+                            j < hOffset || j >= paneImage.getWidth() - hOffset) {
                         paneImage.setRGB(j, i, rgb);
                     }
                 }
@@ -233,4 +233,7 @@ public class Zone {
         glyphMap.setBorder(g);
     }
     //todo - lots of methods for conversions
+    public OutputMode outputMode() {
+        return mode;
+    }
 }

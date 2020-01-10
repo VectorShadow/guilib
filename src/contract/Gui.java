@@ -32,23 +32,22 @@ public interface Gui {
      * Setup methods.
      *
      */
+    //add a display channel
+    public int addChannel(OutputMode om);
     //add a zone with the specified parameters, and return the number of zones now
     public int addZone(
+            int channelID,
             double verticalOriginPct,
             double verticalSizePct,
             double horizontalOriginPct,
             double horizontalSizePct,
             OutputMode om);
-    //stop displaying the specified Zone
-    void hideZone(int zoneID);
     //remove the specified Zone
-    void removeZone(int zoneID);
-    //resume displaying the specified Zone
-    void showZone(int zoneID);
+    void removeZone(int channelID, int zoneID);
     //set the background glyph for the specified Zone
-    void setBackground(int zoneID, Glyph g);
+    void setBackground(int channelID, int zoneID, Glyph g);
     //set the border glyph for the specified Zone
-    void setBorder(int zoneID, Glyph g);
+    void setBorder(int channelID, int zoneID, Glyph g);
     //add a KeyListener to this GUI
     void addKeyListener(KeyListener kl);
     /**
@@ -57,31 +56,33 @@ public interface Gui {
      * Print adds Glyphs to the screen.
      * Redraw paints the screen with an image derived from all added Glyphs
      */
-    //clear the entire screen
+    //change the active channel
+    void changeChannel(int newChannelID);
+    //clear the entire screen of the current display channel
     void clear();
-    //clear a specific Zone
+    //clear a specific Zone within the current display channel
     void clear(int zone);
-    //set a Glyph on the screen
+    //set a Glyph on the screen within the current display channel
     void print(int row, int col, Glyph g);
-    //set a String of Glyphs on the screen
+    //set a String of Glyphs on the screen within the current display channel
     void print(int row, int col, GlyphString gs);
-    //set a Glyph in a specific Zone
+    //set a Glyph in a specific Zone within the current display channel
     void print(int zone, int row, int col, Glyph g);
-    //set a String of Glyphs in a specific Zone
+    //set a String of Glyphs in a specific Zone within the current display channel
     void print(int zone, int row, int col, GlyphString gs);
-    //set a String of Glyphs aligned to the center of the screen
-    void printCentered(int row, ArrayList<Glyph> g);
-    //set a String of Glyphs aligned to the center of the zone
+    //set a String of Glyphs aligned to the center of the screen within the current display channel
+    void printCentered(int row, GlyphString gs);
+    //set a String of Glyphs aligned to the center of the zone within the current display channel
     void printCentered(int zone, int row, GlyphString gs);
-    //draw all currently set Glyphs to the monitor
+    //draw all currently set Glyphs within the current display channel to the monitor
     void redraw();
     //set an icon image for the windowed frame
     void setIcon(String pathToIconImage);
     //set a title for the windowed frame
     void setTitle(String title);
-    //print a centered menu
+    //print a centered menu within the current display channel
     void printMenu(int row, Menu menu, Color background, Color foreground);
-    //print a centered menu in the specified zone
+    //print a centered menu in the specified zone within the current display channel
     void printMenu(int zone, int row, Menu menu, Color background, Color foreground);
     /**
      * Information methods.
