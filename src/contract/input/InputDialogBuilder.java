@@ -5,12 +5,12 @@ import java.awt.*;
 public class InputDialogBuilder {
     private InputDialog inputDialog;
 
-    private InputDialogBuilder(String title){
-        inputDialog = new InputDialog(title);
+    private InputDialogBuilder(String title, double pct){
+        inputDialog = new InputDialog(title, pct);
     }
 
-    public static InputDialogBuilder setTitle(String title) {
-        return new InputDialogBuilder(title);
+    public static InputDialogBuilder setTitleAndPosition(String title, double positionVerticalPercentOfScreen) {
+        return new InputDialogBuilder(title, positionVerticalPercentOfScreen);
     }
 
     public InputDialogBuilder setColors(

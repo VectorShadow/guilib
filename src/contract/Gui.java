@@ -86,9 +86,9 @@ public interface Gui {
     //print a centered menu in the specified zone within the current display channel
     void printMenu(int zone, int row, Menu menu, Color background, Color foreground);
     //print a centered input dialog within the current display channel
-    void printDialog(int row, InputDialog dialog);
+    void printDialog(InputDialog dialog);
     //print a centered input dialog in the specified zone within the current display channel
-    void printDialog(int zone, int row, InputDialog dialog);
+    void printDialog(int zone, InputDialog dialog);
     /**
      * Information methods.
      */

@@ -48,6 +48,7 @@ public class InputDialog implements Iterable<GlyphString> {
     }
 
     private final String title;
+    private final double rowStartPercent;
     private Color promptBackground;
     private Color promptForeground;
     private Color promptHighlight;
@@ -57,8 +58,9 @@ public class InputDialog implements Iterable<GlyphString> {
 
     private int activeFieldIndex = 0;
 
-    InputDialog(String title) {
+    InputDialog(String title, double rowStartPct) {
         this.title = title;
+        rowStartPercent = rowStartPct;
         fields = new ArrayList<>();
     }
     void setColors(Color pb, Color pf, Color ph, Color rb, Color rf) {
@@ -81,7 +83,7 @@ public class InputDialog implements Iterable<GlyphString> {
     public void appendToActiveField(char c) {
         fields.get(activeFieldIndex).appendResponse(c);
     }
-    public void undoFromActiveField(char c) {
+    public void undoFromActiveField() {
         fields.get(activeFieldIndex).undoResponse();
     }
     public void advanceActiveField() {
@@ -99,11 +101,15 @@ public class InputDialog implements Iterable<GlyphString> {
     public void resetActiveField() {
         activeFieldIndex = 0;
     }
-    private boolean isActiveFieldLastEnabled() {
+    public boolean isActiveFieldLastEnabled() {
         for (int i = activeFieldIndex + 1; i < fields.size(); ++i) {
             if (fields.get(i).isEnabled()) return false;
         }
         return true;
+    }
+
+    public double getRowStartPercent() {
+        return rowStartPercent;
     }
 
     @Override
@@ -112,7 +118,7 @@ public class InputDialog implements Iterable<GlyphString> {
     }
     @Override
     public InputDialog clone() {
-        InputDialogBuilder idb = InputDialogBuilder.setTitle(title);
+        InputDialogBuilder idb = InputDialogBuilder.setTitleAndPosition(title, rowStartPercent);
         idb.setColors(promptBackground, promptForeground, promptHighlight, responseBackground, responseForeground);
         for (InputDialogField field : fields) idb.addInputDialogField(field);
         return idb.build();
