@@ -29,6 +29,13 @@ public class Chroma {
     public static final Color VIOLET = new Color(127, 0, 255);
     public static final Color TURQUOISE = new Color(0, 127, 255);
 
+    public static final Color ULTRARED = new Color(255, 127, 127);
+    public static final Color ULTRAGREEN = new Color(127, 255, 127);
+    public static final Color ULTRABLUE = new Color(127, 127, 255);
+    public static final Color ULTRAYELLOW = new Color(255, 255, 127);
+    public static final Color ULTRAMAGENTA = new Color(255, 127, 255);
+    public static final Color ULTRACYAN = new Color(127, 255, 255);
+
     private static final double DIM_FACTOR = 2.0 / 3.0;
     private static final double DARK_FACTOR = 1.0 / 3.0;
 
@@ -44,5 +51,14 @@ public class Chroma {
     }
     public static Color dark(Color c) {
         return new Color(dark(c.getRed()), dark(c.getGreen()), dark(c.getBlue()));
+    }
+    public static Color ultra(Color c) {
+        if (c.equals(RED)) return ULTRARED;
+        if (c.equals(GREEN)) return ULTRAGREEN;
+        if (c.equals(BLUE)) return ULTRABLUE;
+        if (c.equals(YELLOW)) return ULTRAYELLOW;
+        if (c.equals(MAGENTA)) return ULTRAMAGENTA;
+        if (c.equals(CYAN)) return ULTRACYAN;
+        return BLACK;
     }
 }
