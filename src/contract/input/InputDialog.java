@@ -47,8 +47,8 @@ public class InputDialog implements Iterable<GlyphString> {
         }
     }
 
-    private final String title;
     private final double rowStartPercent;
+    private String title;
     private Color promptBackground;
     private Color promptForeground;
     private Color promptHighlight;
@@ -77,8 +77,14 @@ public class InputDialog implements Iterable<GlyphString> {
     public void setEnabledField(int fieldIndex, boolean enabled) {
         fields.get(fieldIndex).setEnabled(enabled);
     }
+    public boolean isEnabledField(int fieldIndex) {
+        return fields.get(fieldIndex).isEnabled();
+    }
     public GlyphString glyphStringTitle() {
         return new GlyphString(title, promptBackground, promptHighlight);
+    }
+    public void setTitle(String t) {
+        title = t;
     }
     public void appendToActiveField(char c) {
         fields.get(activeFieldIndex).appendResponse(c);
@@ -101,12 +107,16 @@ public class InputDialog implements Iterable<GlyphString> {
     public void resetActiveField() {
         activeFieldIndex = 0;
     }
+    public String readFromField(int fieldIndex) {
+        return fields.get(fieldIndex).getResponse();
+    }
     public boolean isActiveFieldLastEnabled() {
         for (int i = activeFieldIndex + 1; i < fields.size(); ++i) {
             if (fields.get(i).isEnabled()) return false;
         }
         return true;
     }
+
 
     public double getRowStartPercent() {
         return rowStartPercent;
