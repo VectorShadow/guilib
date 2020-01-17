@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Framework for implementing generic io.menus.
+ * Framework for implementing generic implementation.menus.
  */
 public class Menu implements Iterable<MenuOption>{
 
@@ -64,6 +64,9 @@ public class Menu implements Iterable<MenuOption>{
 
     public String getTitle() {
         return title;
+    }
+    public boolean isEnabled(int optionIndex) {
+        return options.get(optionIndex).isEnabled();
     }
     public void setEnabled(int optionIndex, boolean enabled){
         if (enabledCount <= 1 && !enabled) return; //don't disable the last option

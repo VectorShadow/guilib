@@ -104,6 +104,11 @@ public class InputDialog implements Iterable<GlyphString> {
             if (activeFieldIndex < 0) activeFieldIndex = fields.size() - 1;
         } while (!fields.get(activeFieldIndex).isEnabled());
     }
+    public void setActiveFieldIndex(int index) {
+        if (!fields.get(index).isEnabled())
+            throw new IllegalArgumentException("Field " + index + "must be enabled before being set as active.");
+        activeFieldIndex = index;
+    }
     public void resetActiveField() {
         activeFieldIndex = 0;
     }
