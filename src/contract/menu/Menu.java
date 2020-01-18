@@ -46,6 +46,7 @@ public class Menu implements Iterable<MenuOption>{
     MenuOption getOption(int index) {
         return options.get(index);
     }
+    public String getOptionName(int index) {return getOption(index).getName();}
     void addOption(MenuOption mo) {
         options.add(mo);
         if (mo.isEnabled()) ++enabledCount;
