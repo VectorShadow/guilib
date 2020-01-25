@@ -171,13 +171,14 @@ public class Zone {
             // if count now exceeds the limit(and we aren't already done),
             // print a special char colored from the current word and stop
             if (++charCount >= maxChars && !done) {
-                print(printCursor.y, printCursor.x, GlyphBuilder.build(
-                        ProtoGlyphBuilder.setDefaults(
-                                OutputMode.LIMIT_BREAK,
+                print(
+                        printCursor.y,
+                        printCursor.x,
+                        GlyphBuilder.buildGlyph().setDefaults(
                                 nextWord.get(0).getBaseColor(),
-                                nextWord.get(0).getFaceColor()
-                        ).build()
-                ));
+                                nextWord.get(0).getFaceColor(),
+                                OutputMode.LIMIT_BREAK).build()
+                );
                 done = true;
             }
         } while (!done);

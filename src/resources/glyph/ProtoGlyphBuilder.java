@@ -10,23 +10,45 @@ public class ProtoGlyphBuilder {
     private ProtoGlyphBuilder(){
 
     }
-    public static ProtoGlyphBuilder setDefaults(char sym, Color bg, Color fg) {
-        return setDefaults(sym, bg, fg, fg);
+
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color fg, char vis) {
+        return setDefaults(bg, fg, vis, vis);
     }
-    public static ProtoGlyphBuilder setDefaults(char sym, Color bg, Color p, Color s) {
-        return setDefaults(sym, bg, p, s, s);
+
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color fg, char vis, char vague) {
+        return setDefaults(bg, fg, fg, vis, vague);
     }
-    public static ProtoGlyphBuilder setDefaults(char sym, Color bg, Color p, Color s, Color t) {
+
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color pri, Color sec, char vis) {
+        return setDefaults(bg, pri, sec, vis, vis);
+    }
+
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color pri, Color sec, char vis, char vague) {
+        return setDefaults(bg, pri, sec, sec, vis, vague);
+    }
+
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color pri, Color sec, Color ter, char vis) {
+        return setDefaults(bg, pri, sec, ter, vis, vis);
+    }
+    public static ProtoGlyphBuilder setDefaults(Color bg, Color pri, Color sec, Color ter, char vis, char vague) {
         ProtoGlyphBuilder pgb = new ProtoGlyphBuilder();
-        pgb.protoGlyph = new ProtoGlyph(sym, bg, p, s, t);
+        pgb.protoGlyph = new ProtoGlyph(bg, pri, sec, ter, vis, vague);
         return pgb;
     }
-    public ProtoGlyphBuilder setSourceCoordinates(int r, int c) {
-        protoGlyph.setSourceCoordinates(r, c);
+    public ProtoGlyphBuilder setVisibleSourceCoordinates(int r, int c) {
+        protoGlyph.setVisibleSourceCoordinates(r, c);
         return this;
     }
-    public ProtoGlyphBuilder addSymbol(Pair<Character> symPair) {
-        protoGlyph.addSymbol(symPair);
+    public ProtoGlyphBuilder setVagueSourceCoordinates(int r, int c) {
+        protoGlyph.setVagueSourceCoordinates(r, c);
+        return this;
+    }
+    public ProtoGlyphBuilder addVisibleSymbol(Pair<Character> symPair) {
+        protoGlyph.addVisibleSymbol(symPair);
+        return this;
+    }
+    public ProtoGlyphBuilder addVagueSymbol(Pair<Character> symPair) {
+        protoGlyph.addVagueSymbol(symPair);
         return this;
     }
     public ProtoGlyphBuilder addBackground(Pair<Color> bgPair) {

@@ -39,7 +39,7 @@ public class ImageManager {
         return out;
     }
     public static boolean exists(int row, int col, RenderContext rc) {
-        if (!tilesets.containsKey(rc)) return false;
+        if (!tilesets.containsKey(rc) || row < 0 || col < 0) return false;
         int h = rc.imageSize().height;
         int w = rc.imageSize().width;
         return h * row + h <= (tilesets.get(rc)).getHeight() && w * col + w <= (tilesets.get(rc)).getWidth();

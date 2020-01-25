@@ -47,15 +47,15 @@ public class Chroma {
     }
 
     public static Color dim(Color c) {
-        return new Color(dim(c.getRed()), dim(c.getGreen()), dim(c.getBlue()));
+        return c == null ? null : new Color(dim(c.getRed()), dim(c.getGreen()), dim(c.getBlue()));
     }
     public static Color dark(Color c) {
-        return new Color(dark(c.getRed()), dark(c.getGreen()), dark(c.getBlue()));
+        return c == null ? null : new Color(dark(c.getRed()), dark(c.getGreen()), dark(c.getBlue()));
     }
     public static Color ultra(Color c) {
-        if (c.equals(RED)) return ULTRARED;
-        if (c.equals(GREEN)) return ULTRAGREEN;
-        if (c.equals(BLUE)) return ULTRABLUE;
+        if (c.equals(RED) || c.equals(ORANGE) || c.equals(CRIMSON)) return ULTRARED;
+        if (c.equals(GREEN) || c.equals(SLIME) || c.equals(AQUA)) return ULTRAGREEN;
+        if (c.equals(BLUE) || c.equals(VIOLET) || c.equals(TURQUOISE)) return ULTRABLUE;
         if (c.equals(YELLOW)) return ULTRAYELLOW;
         if (c.equals(MAGENTA)) return ULTRAMAGENTA;
         if (c.equals(CYAN)) return ULTRACYAN;

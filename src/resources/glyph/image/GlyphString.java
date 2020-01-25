@@ -64,22 +64,15 @@ public class GlyphString {
             ArrayList<Pair<Color>> additionalForegrounds){
         ArrayList<Glyph> glyphString = new ArrayList<>();
         for (char c : text.toCharArray()) {
-            ProtoGlyphBuilder pgb = ProtoGlyphBuilder.setDefaults(
-                    c,
-                    defaultBackground,
-                    defaultForeground
-            );
+            GlyphBuilder gb = GlyphBuilder.buildGlyph();
+            gb.setDefaults(defaultBackground, defaultForeground, c);
             for (Pair<Color> bp : additionalBackgrounds) {
-                pgb.addBackground(bp);
+                gb.addBackgroundColor(bp);
             }
             for (Pair<Color> fp : additionalForegrounds) {
-                pgb.addBackground(fp);
+                gb.addBackgroundColor(fp);
             }
-            glyphString.add(
-                    GlyphBuilder.build(
-                        pgb.build()
-                    )
-            );
+            glyphString.add(gb.build());
         }
         return glyphString;
     }

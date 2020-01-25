@@ -23,16 +23,18 @@ import java.util.ArrayList;
  * Include addFoo(...) any number of times between setDefaults and build for ContinuumImageGlyphs.
  */
 public class GlyphBuilder {
-    Color bg0;
-    Color fp0;
-    Color fs0;
-    Color ft0;
-    char sym0;
-    ArrayList<Pair<Color>> bg;
-    ArrayList<Pair<Color>> fp;
-    ArrayList<Pair<Color>> fs;
-    ArrayList<Pair<Color>> ft;
-    ArrayList<Pair<Character>> sym;
+    private int imageRow = -1;
+    private int imageCol = -1;
+    private Color bg0;
+    private Color fp0;
+    private Color fs0;
+    private Color ft0;
+    private char sym0;
+    private ArrayList<Pair<Color>> bg;
+    private ArrayList<Pair<Color>> fp;
+    private ArrayList<Pair<Color>> fs;
+    private ArrayList<Pair<Color>> ft;
+    private ArrayList<Pair<Character>> sym;
 
     private GlyphBuilder() {
         bg = new ArrayList<>();
@@ -42,7 +44,7 @@ public class GlyphBuilder {
         sym = new ArrayList<>();
     }
 
-    private static GlyphBuilder buildGlyph(){
+    public static GlyphBuilder buildGlyph(){
         return new GlyphBuilder();
     }
 
@@ -58,10 +60,10 @@ public class GlyphBuilder {
      * no corresponding source image can be found by the ImageManager, and second, to indicate WordBreak
      * status if set in a Zone which requires this information.
      */
-    private GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
+    public GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
         return setDefaults(defaultBackground, defaultForeground, defaultForeground, defaultSymbol);
     }
-    private GlyphBuilder setDefaults(
+    GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -69,7 +71,7 @@ public class GlyphBuilder {
     ){
         return setDefaults(defaultBackground, defaultPrimary, defaultSecondary, defaultSecondary, defaultSymbol);
     }
-    private GlyphBuilder setDefaults(
+    GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -84,12 +86,12 @@ public class GlyphBuilder {
         return this;
     }
 
-    private GlyphBuilder addBackgroundColor(Pair<Color> bc) {
+    public GlyphBuilder addBackgroundColor(Pair<Color> bc) {
         bg.add(bc);
         return this;
     }
 
-    private GlyphBuilder addForegroundColor(Pair<Color> fc) {
+    public GlyphBuilder addForegroundColor(Pair<Color> fc) {
         fp.add(fc);
         return this;
     }
@@ -109,11 +111,48 @@ public class GlyphBuilder {
         this.sym.add(sym);
         return this;
     }
+    private GlyphBuilder setImageRowAndColumn(int row, int col) {
+        imageRow = row;
+        imageCol = col;
+        return this;
+    }
+    public GlyphBuilder readProtoGlyph(ProtoGlyph pg, boolean vague) {
+        setDefaults(pg.background, pg.primary, pg.secondary, pg.tertiary, vague ? pg.vagueSymbol : pg.visibleSymbol);
+        for (Pair<Color> bg : pg.backgrounds) addBackgroundColor(bg);
+        for (Pair<Color> pri : pg.primaries) addBackgroundColor(pri);
+        for (Pair<Color> sec : pg.secondaries) addBackgroundColor(sec);
+        for (Pair<Color> ter : pg.tertiaries) addBackgroundColor(ter);
+        for (Pair<Character> sym : vague ? pg.vagueSymbols : pg.visibleSymbols) addSymbol(sym);
+        setImageRowAndColumn(vague ? pg.vagueImageRow : pg.visibleImageRow, vague ? pg.vagueImageCol : pg.visibleImageCol);
+        return this;
+    }
+    private ArrayList<Pair<Color>> compressColors(double insertedProbability, ArrayList<Pair<Color>> originalList, ArrayList<Pair<Color>> updatedList) {
+        double scale = 1.0 - insertedProbability;
+        for (Pair<Color> cp : originalList) {
+            double newProbability = cp.probability * scale + insertedProbability;
+            if (newProbability <= 0.0 || newProbability > 1.0) throw new IllegalStateException("Invalid percentage: %" + newProbability * 100);
+            updatedList.add(new Pair<>(newProbability, cp.element));
+        }
+        return updatedList;
+    }
+    public GlyphBuilder addStatusColors(ArrayList<Pair<Color>> cpl) {
+        if (!cpl.isEmpty()) {
+            ArrayList<Pair<Color>> statusBackground = new ArrayList<>(cpl);
+            bg = compressColors(cpl.get(cpl.size() - 1).probability, bg, statusBackground);
+        }
+        return this;
+    }
+    public GlyphBuilder addReflection(Pair<Color> reflect) {
+        ArrayList<Pair<Color>> reflectionForeground = new ArrayList<>();
+        reflectionForeground.add(reflect);
+        fp = compressColors(reflect.probability, fp, reflectionForeground);
+        return this;
+    }
 
     /**
      * Complete the building of an ASCII-only Glyph.
      */
-    private Glyph build(){
+    public Glyph build(){
         if (bg.size() == 1 && fp.size() == 1 && sym.size() == 1){
             return new SimpleGlyph(bg0, fp0, sym0);
         }
@@ -133,11 +172,11 @@ public class GlyphBuilder {
      * Note that the tilesets corresponding to fullscreen and windowed RenderContexts for all Output Modes
      * must be maintained in parallel, or undefined behavior can occur.
      */
-    private Glyph build(int row, int col, OutputMode mode){
-        if (!ImageManager.exists(row, col, mode.generateContext(true))) return build();
+    public Glyph build(OutputMode mode){
+        if (!ImageManager.exists(imageRow, imageCol, mode.generateContext(true))) return build();
         ImageGlyph ig;
         if (bg.size() == 1 && fp.size() == 1 && fs.size() <= 1 && ft.size() <= 1){
-            ig = new SimpleImageGlyph(bg0, fp0, fs0, ft0, row, col);
+            ig = new SimpleImageGlyph(bg0, fp0, fs0, ft0, imageRow, imageCol);
         }
         else {
             ig = new ContinuumImageGlyph(
@@ -145,34 +184,11 @@ public class GlyphBuilder {
                     new Continuum<>(fp0, fp),
                     new Continuum<>(fs0, fs),
                     new Continuum<>(ft0, ft),
-                    row,
-                    col
+                    imageRow,
+                    imageCol
             );
         }
         ig.setWordBreak(sym0);
         return ig;
     }
-    private static GlyphBuilder partialBuild(ProtoGlyph protoGlyph) {
-        GlyphBuilder gb = GlyphBuilder.buildGlyph().setDefaults(
-                protoGlyph.baseBackground,
-                protoGlyph.basePrimary,
-                protoGlyph.baseSecondary,
-                protoGlyph.baseTertiary,
-                protoGlyph.baseSymbol);
-        for (Pair<Character> symPair : protoGlyph.symbols) gb.addSymbol(symPair);
-        for (Pair<Color> bgPair : protoGlyph.backgrounds) gb.addBackgroundColor(bgPair);
-        for (Pair<Color> pPair : protoGlyph.primaries) gb.addPrimaryColor(pPair);
-        for (Pair<Color> sPair : protoGlyph.secondaries) gb.addSecondaryColor(sPair);
-        for (Pair<Color> tPair : protoGlyph.tertiaries) gb.addTertiaryColor(tPair);
-        return gb;
-    }
-    public static Glyph build(ProtoGlyph protoGlyph) {
-        return partialBuild(protoGlyph).build();
-    }
-    public static Glyph build(ProtoGlyph protoGlyph, OutputMode mode) {
-        if (ImageManager.hasGraphics() && protoGlyph.allowGraphics())
-            return partialBuild(protoGlyph).build(protoGlyph.imageRow, protoGlyph.imageCol, mode);
-        else return build(protoGlyph);
-    }
-
 }
