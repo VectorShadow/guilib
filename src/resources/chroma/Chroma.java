@@ -4,8 +4,9 @@ import java.awt.*;
 
 /**
  * Provide a basic, easily distinguishable color scheme.
- * Permits 15 basic colors, and 2 additional gradients of 14 of those(exluding Black),
+ * Permits 15 basic colors, and 2 additional gradients of 14 of those(excluding Black),
  * for a total of 43 distinct colors.
+ * Added 14 new colors including metallic and elemental.
  */
 public class Chroma {
     public static final Color WHITE = new Color(255, 255, 255);
@@ -36,8 +37,26 @@ public class Chroma {
     public static final Color ULTRAMAGENTA = new Color(255, 127, 255);
     public static final Color ULTRACYAN = new Color(127, 255, 255);
 
-    private static final double DIM_FACTOR = 2.0 / 3.0;
-    private static final double DARK_FACTOR = 1.0 / 3.0;
+    public static final Color BLOOD_RED = new Color(159, 31, 15);
+    public static final Color VENOM_GREEN = new Color(15, 159, 31);
+    public static final Color ICHOR_BLUE = new Color(31, 15, 159);
+
+    public static final Color LEATHER_BROWN = new Color(104, 63, 47);
+    public static final Color JADE_GREEN= new Color(47, 104, 63);
+    public static final Color ROYAL_PURPLE = new Color(63, 47, 104);
+
+    public static final Color METALLIC_IRON = new Color(71, 63, 67);
+    public static final Color METALLIC_BRONZE = new Color(191, 95, 47);
+    public static final Color METALLIC_SILVER = new Color(143, 175, 191);
+    public static final Color METALLIC_GOLD = new Color(207, 175, 79);
+
+    public static final Color ELEMENTAL_FLAME = new Color(255, 47, 31);
+    public static final Color ELEMENTAL_FROST = new Color(104, 143, 255);
+    public static final Color ELEMENTAL_LIGHTNING = new Color(231, 207, 79);
+    public static final Color ELEMENTAL_ACID = new Color(47, 95, 31);
+
+    private static final double DIM_FACTOR = 2.0 / 5.0;
+    private static final double DARK_FACTOR = 1.0 / 5.0;
 
     private static int dim(int rgbValue) {
         return (int)((double)rgbValue * DIM_FACTOR);
