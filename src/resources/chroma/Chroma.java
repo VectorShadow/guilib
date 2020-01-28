@@ -41,9 +41,9 @@ public class Chroma {
     public static final Color VENOM_GREEN = new Color(15, 159, 31);
     public static final Color ICHOR_BLUE = new Color(31, 15, 159);
 
-    public static final Color LEATHER_BROWN = new Color(104, 63, 47);
-    public static final Color JADE_GREEN= new Color(47, 104, 63);
-    public static final Color ROYAL_PURPLE = new Color(63, 47, 104);
+    public static final Color BROWN = new Color(87, 63, 39);
+    public static final Color VIRIDIAN = new Color(39, 87, 63);
+    public static final Color ANTIAMBER = new Color(63, 39, 87);
 
     public static final Color METALLIC_IRON = new Color(71, 63, 67);
     public static final Color METALLIC_BRONZE = new Color(191, 95, 47);
