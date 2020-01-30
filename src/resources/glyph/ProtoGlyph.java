@@ -78,8 +78,12 @@ public class ProtoGlyph {
         tertiaries.add(tPair);
     }
 
-    public ArrayList<Pair<Character>> getVisibleSymbols() {
-        return visibleSymbols;
+    public char getSymbol(boolean vague) {
+        return vague ? vagueSymbol : visibleSymbol;
+    }
+
+    public ArrayList<Pair<Character>> getSymbols(boolean vague) {
+        return vague ? vagueSymbols : visibleSymbols;
     }
 
     public ArrayList<Pair<Color>> getBackgrounds() {
