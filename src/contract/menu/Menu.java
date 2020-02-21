@@ -37,7 +37,6 @@ public class Menu implements Iterable<MenuOption>{
     private ArrayList<MenuOption> options = new ArrayList<>();
     private int selectedOptionIndex = -1;
     int enabledCount = 0;
-    MenuHandler menuHandler = null;
 
     Menu(String title) {
         this.title = title;
@@ -50,9 +49,6 @@ public class Menu implements Iterable<MenuOption>{
     void addOption(MenuOption mo) {
         options.add(mo);
         if (mo.isEnabled()) ++enabledCount;
-    }
-    void setMenuHandler(MenuHandler mh) {
-        menuHandler = mh;
     }
     void setSelectedOptionIndex(int optionIndex){
         if (optionIndex < 0 || optionIndex >= options.size())

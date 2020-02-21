@@ -16,13 +16,8 @@ public class MenuBuilder {
         menu.addOption(menuOption);
         return this;
     }
-    public MenuBuilder setMenuHandler(MenuHandler menuHandler) {
-        menu.setMenuHandler(menuHandler);
-        return this;
-    }
     public Menu build() {
         if (menu.enabledCount <= 0) throw new IllegalStateException("Menu may not be built with no enabled options.");
-        if (menu.menuHandler == null) throw new IllegalStateException("Menu may not be built without a MenuHandler.");
         ArrayList<MenuOption> menuOptions = menu.getOptions();
         for (int i = 0; i < menuOptions.size(); ++i) {
             if (menuOptions.get(i).isEnabled()) { //find the first enabled option and set it as the selected option
