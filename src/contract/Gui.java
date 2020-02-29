@@ -65,12 +65,14 @@ public interface Gui {
     void clear(int zone);
     //set a Glyph on the screen within the current display channel
     void print(int row, int col, Glyph g);
-    //set a String of Glyphs on the screen within the current display channel
-    void print(int row, int col, GlyphString gs);
+    //set a String of Glyphs on the screen within the current display channel,
+    // and return the row and column of the last Glyph
+    Point print(int row, int col, GlyphString gs);
     //set a Glyph in a specific Zone within the current display channel
     void print(int zone, int row, int col, Glyph g);
-    //set a String of Glyphs in a specific Zone within the current display channel
-    void print(int zone, int row, int col, GlyphString gs);
+    //set a String of Glyphs in a specific Zone within the current display channel,
+    // and return the row and column of the last Glyph
+    Point print(int zone, int row, int col, GlyphString gs);
     //set a String of Glyphs aligned to the center of the screen within the current display channel
     void printCentered(int row, GlyphString gs);
     //set a String of Glyphs aligned to the center of the zone within the current display channel

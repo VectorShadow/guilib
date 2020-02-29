@@ -4,6 +4,7 @@ import resources.glyph.Glyph;
 import resources.glyph.image.GlyphString;
 import resources.render.OutputMode;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class Channel {
 
     public int addZone(Zone z){
         zones.add(z);
-        return zones.size();
+        return zones.size() - 1;
     }
     public void removeZone(int zoneID){
         zones.remove(zoneID);
@@ -52,16 +53,16 @@ public class Channel {
         mainZone.print(row, col, g);
     }
 
-    public void print(int row, int col, GlyphString gs) {
-        mainZone.print(row, col, gs);
+    public Point print(int row, int col, GlyphString gs) {
+        return mainZone.print(row, col, gs);
     }
 
     public void print(int zone, int row, int col, Glyph g) {
         zones.get(zone).print(row, col, g);
     }
 
-    public void print(int zone, int row, int col, GlyphString gs) {
-        zones.get(zone).print(row, col, gs);
+    public Point print(int zone, int row, int col, GlyphString gs) {
+        return zones.get(zone).print(row, col, gs);
     }
 
     public void printCentered(int row, GlyphString gs) {

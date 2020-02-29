@@ -97,12 +97,12 @@ public class Zone {
     }
 
     /**
-     * Print a string of glyphs.
+     * Print a string of glyphs and return the row and column of the last glyph as a Point(column, row).
      * This is intended for text strings rendered as glyphs, so we do this by parsing the string for individual words.
      * (Separated by white space - that is, space, tab, or new line)
      * Wrapping is handled by following the GlyphStringProtocol for this zone.
      */
-    public void print(int row, int col, GlyphString gs) {
+    public Point print(int row, int col, GlyphString gs) {
         ArrayList<Glyph> glyphString = gs.asList();
         ArrayList<Glyph> remainder;
         ArrayList<Glyph> nextWord;
@@ -145,8 +145,6 @@ public class Zone {
                 printCursor = lineReturn(printCursor);
                 //check that this line is valid for this zone's GSP
                 if (!validLine(printCursor.y, totalLines++)) break;
-                //ignore any pending wordbreaks
-                wordBreak = Glyph.WordBreak.NO_BREAK;
             }
             //print each glyph in the current word, moving the cursor accordingly
             for (Glyph glyph : nextWord) {
@@ -182,6 +180,7 @@ public class Zone {
                 done = true;
             }
         } while (!done);
+        return printCursor;
     }
     /**
      * Ensure the provided origin is valid under this zone's GSP.
