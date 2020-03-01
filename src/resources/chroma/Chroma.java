@@ -55,6 +55,8 @@ public class Chroma {
     public static final Color ELEMENTAL_LIGHTNING = new Color(231, 207, 79);
     public static final Color ELEMENTAL_ACID = new Color(47, 95, 31);
 
+    public static final Color BEIGE = new Color(191, 143, 95);
+
     private static final double DIM_FACTOR = 2.0 / 5.0;
     private static final double DARK_FACTOR = 1.0 / 5.0;
 
