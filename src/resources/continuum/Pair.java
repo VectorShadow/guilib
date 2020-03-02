@@ -1,10 +1,12 @@
 package resources.continuum;
 
+import java.io.Serializable;
+
 /**
  * A pair consisting of an element and the probability for that element
  * @param <E> the class of the element
  */
-public class Pair<E> {
+public class Pair<E> implements Serializable {
     public double probability;
     public E element;
 

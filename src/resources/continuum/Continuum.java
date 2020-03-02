@@ -1,5 +1,6 @@
 package resources.continuum;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
@@ -10,7 +11,7 @@ import java.util.Random;
  *
  * @param <E> the class of the element
  */
-public class Continuum<E> {
+public class Continuum<E> implements Serializable {
     E base;
     ArrayList<Pair<E>> pairList;
 

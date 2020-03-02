@@ -8,6 +8,8 @@ import resources.render.OutputMode;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 /**
@@ -51,12 +53,16 @@ public interface Gui {
     void setBorder(int channelID, int zoneID, Glyph g);
     //add a KeyListener to this GUI
     void addKeyListener(KeyListener kl);
+    //add a WindowListener to this GUI
+    void addWindowListener(WindowListener wl);
     /**
      * Output methods.
      * Clear removes Glyphs from the screen.
      * Print adds Glyphs to the screen.
      * Redraw paints the screen with an image derived from all added Glyphs
      */
+    //return the active channel
+    int activeChannel();
     //change the active channel
     void changeChannel(int newChannelID);
     //clear the entire screen of the current display channel
