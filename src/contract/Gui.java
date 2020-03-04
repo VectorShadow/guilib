@@ -89,9 +89,9 @@ public interface Gui {
     void setIcon(String pathToIconImage);
     //set a title for the windowed frame
     void setTitle(String title);
-    //print a centered menu within the current display channel
+    //print a centered main.modes.menu within the current display channel
     void printMenu(int row, Menu menu, Color background, Color foreground);
-    //print a centered menu in the specified zone within the current display channel
+    //print a centered main.modes.menu in the specified zone within the current display channel
     void printMenu(int zone, int row, Menu menu, Color background, Color foreground);
     //print a centered input dialog within the current display channel
     void printDialog(InputDialog dialog);
