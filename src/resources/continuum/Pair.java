@@ -36,4 +36,11 @@ public class Pair<E> implements Serializable {
         return new Pair<E>(this);
     }
 
+    /**
+     * Is the element for this pair equivalent to e?
+     */
+    public boolean contains(E e) {
+        return element.equals(e);
+    }
+
 }
