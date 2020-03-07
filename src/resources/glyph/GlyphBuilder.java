@@ -107,7 +107,7 @@ public class GlyphBuilder {
         return this;
     }
 
-    private GlyphBuilder addSymbol(Pair<Character> sym) {
+    public GlyphBuilder addSymbol(Pair<Character> sym) {
         this.sym.add(sym);
         return this;
     }
