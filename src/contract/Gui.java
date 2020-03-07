@@ -2,6 +2,7 @@ package contract;
 
 import contract.input.InputDialog;
 import contract.menu.Menu;
+import resources.chroma.ChromaSet;
 import resources.glyph.Glyph;
 import resources.glyph.image.GlyphString;
 import resources.render.OutputMode;
@@ -90,9 +91,9 @@ public interface Gui {
     //set a title for the windowed frame
     void setTitle(String title);
     //print a centered menu within the current display channel
-    void printMenu(int row, Menu menu, Color background, Color foreground);
+    void printMenu(int row, Menu menu, ChromaSet cs);
     //print a centered menu in the specified zone within the current display channel
-    void printMenu(int zone, int row, Menu menu, Color background, Color foreground);
+    void printMenu(int zone, int row, Menu menu, ChromaSet cs);
     //print a centered input dialog within the current display channel
     void printDialog(InputDialog dialog);
     //print a centered input dialog in the specified zone within the current display channel
