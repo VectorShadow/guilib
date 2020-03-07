@@ -48,8 +48,12 @@ public interface Gui {
             OutputMode om);
     //remove the specified Zone
     void removeZone(int channelID, int zoneID);
+    //set the background glyph for the main Zone of the specified Channel
+    void setBackground(int channelID, Glyph g);
     //set the background glyph for the specified Zone
     void setBackground(int channelID, int zoneID, Glyph g);
+    //set the border glyph for the main Zone of the specified Channel
+    void setBorder(int channelID, Glyph g);
     //set the border glyph for the specified Zone
     void setBorder(int channelID, int zoneID, Glyph g);
     //add a KeyListener to this GUI
@@ -117,4 +121,8 @@ public interface Gui {
     int rowAtPercent(int zone, double percent);
     //get the column index for a certain percentage of the zone
     int colAtPercent(int zone, double percent);
+    //get the number of channels
+    int countChannels();
+    //get the number of zones in the specified channel
+    int countZones(int channelId);
 }

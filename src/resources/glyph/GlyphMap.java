@@ -1,12 +1,10 @@
 package resources.glyph;
 
-import resources.glyph.Glyph;
-
 public class GlyphMap {
     final int rows, cols;
     Glyph[][] map;
     Glyph background = Glyph.EMPTY_GLYPH;
-    Glyph border = Glyph.EMPTY_GLYPH;
+    Glyph border = null;
 
     public GlyphMap(int r, int c){
         rows = r;
@@ -17,7 +15,7 @@ public class GlyphMap {
     public void initialize() {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                if (i == 0 || j == 0 || i == rows - 1 || j == cols - 1)
+                if ((i == 0 || j == 0 || i == rows - 1 || j == cols - 1) && border != null)
                     setGlyph(i, j, border);
                 else
                     setGlyph(i, j, background);

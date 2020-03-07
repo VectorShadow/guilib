@@ -1,5 +1,8 @@
 package resources.chroma;
 
+import resources.glyph.Glyph;
+import resources.glyph.ascii.SimpleGlyph;
+
 import java.awt.*;
 
 public class ChromaSet {
@@ -25,6 +28,9 @@ public class ChromaSet {
         return highlight;
     }
     public Color subdueForeground() {
-        return Chroma.dark(foreground);
+        return Chroma.dim(foreground);
+    }
+    public Glyph emptyGlyph() {
+        return new SimpleGlyph(background, foreground, ' ');
     }
 }

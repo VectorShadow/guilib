@@ -34,8 +34,14 @@ public class Channel {
     public void removeZone(int zoneID){
         zones.remove(zoneID);
     }
+    public void setBackground(Glyph g){
+        mainZone.setBackground(g);
+    }
     public void setBackground(int zoneID, Glyph g){
         zones.get(zoneID).setBackground(g);
+    }
+    public void setBorder(Glyph g){
+        mainZone.setBorder(g);
     }
     public void setBorder(int zoneID, Glyph g){
         zones.get(zoneID).setBorder(g);
@@ -115,5 +121,8 @@ public class Channel {
     public int colAtPercent(int zone, double percent) {
         checkPercent(percent);
         return (int)(percent * countColumns(zone));
+    }
+    public int countZones() {
+        return zones.size();
     }
 }
