@@ -1,7 +1,7 @@
 package contract;
 
 import resources.glyph.*;
-import resources.glyph.image.GlyphString;
+import resources.glyph.GlyphString;
 import resources.render.OutputMode;
 import resources.render.RenderContext;
 import resources.render.Renderer;
@@ -189,8 +189,16 @@ public class Zone {
         int border = mode.getGlyphStringProtocol().getBorderSize();
         if (p.x < border || p.y < border || p.x >= zoneCols() - border || p.y >= zoneRows() - border)
             throw new IllegalArgumentException("Point " + p + " is not a valid output coordinate for this zone. " +
-                    "Zone bounds: (" + border + ", " + border + ") -> (" + (zoneCols() - border) + ", "
-                    + (zoneRows() - border) + ").");
+                    "Zone bounds: (" + border + ", " + border + ") -> (" + (zoneCols() - border - 1) + ", "
+                    + (zoneRows() - border - 1) + ").");
+    }
+    public Point lowerRightBound() {
+        int border = mode.getGlyphStringProtocol().getBorderSize();
+        return new Point(zoneCols() - border - 1, zoneRows() - border - 1);
+    }
+    public Point upperLeftBound() {
+        int border = mode.getGlyphStringProtocol().getBorderSize();
+        return new Point(border, border);
     }
     /**
      * Move the print cursor the specified number of places forward.

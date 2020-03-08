@@ -4,14 +4,12 @@ import contract.input.InputDialog;
 import contract.menu.Menu;
 import resources.chroma.ChromaSet;
 import resources.glyph.Glyph;
-import resources.glyph.image.GlyphString;
+import resources.glyph.GlyphString;
 import resources.render.OutputMode;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
 
 /**
  * Defines the contract for a GUI. Every sort of GUI should conform to this contract.
@@ -125,4 +123,20 @@ public interface Gui {
     int countChannels();
     //get the number of zones in the specified channel
     int countZones(int channelId);
+    //return the value of the maximum column which can be displayed to in the current channel and zone
+    int maxCol();
+    //return the value of the minimum column which can be displayed to in the current channel and zone
+    int minCol();
+    //return the value of the maximum row which can be displayed to in the current channel and zone
+    int maxRow();
+    //return the value of the minimum row which can be displayed to in the current channel and zone
+    int minRow();
+    //return the value of the maximum column which can be displayed to in the current channel and specified zone
+    int maxCol(int zoneID);
+    //return the value of the minimum column which can be displayed to in the current channel and specified zone
+    int minCol(int zoneID);
+    //return the value of the maximum row which can be displayed to in the current channel and specified zone
+    int maxRow(int zoneID);
+    //return the value of the minimum row which can be displayed to in the current channel and specified zone
+    int minRow(int zoneID);
 }

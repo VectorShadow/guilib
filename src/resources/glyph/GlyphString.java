@@ -1,9 +1,6 @@
-package resources.glyph.image;
+package resources.glyph;
 
 import resources.continuum.Pair;
-import resources.glyph.Glyph;
-import resources.glyph.GlyphBuilder;
-import resources.glyph.ProtoGlyphBuilder;
 
 import java.awt.*;
 import java.util.ArrayList;

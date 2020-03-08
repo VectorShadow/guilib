@@ -1,7 +1,7 @@
 package contract;
 
 import resources.glyph.Glyph;
-import resources.glyph.image.GlyphString;
+import resources.glyph.GlyphString;
 import resources.render.OutputMode;
 
 import java.awt.*;
@@ -124,5 +124,30 @@ public class Channel {
     }
     public int countZones() {
         return zones.size();
+    }
+
+    public int maxCol(){
+        return mainZone.lowerRightBound().x;
+    }
+    public int minCol(){
+        return mainZone.upperLeftBound().x;
+    }
+    public int maxRow(){
+        return mainZone.lowerRightBound().y;
+    }
+    public int minRow(){
+        return mainZone.upperLeftBound().y;
+    }
+    public int maxCol(int zoneID){
+        return zones.get(zoneID).lowerRightBound().x;
+    }
+    public int minCol(int zoneID){
+        return zones.get(zoneID).upperLeftBound().x;
+    }
+    public int maxRow(int zoneID){
+        return zones.get(zoneID).lowerRightBound().y;
+    }
+    public int minRow(int zoneID){
+        return zones.get(zoneID).upperLeftBound().y;
     }
 }

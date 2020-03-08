@@ -1,6 +1,6 @@
 package contract.input;
 
-import resources.glyph.image.GlyphString;
+import resources.glyph.GlyphString;
 
 import java.awt.*;
 import java.util.ArrayList;
