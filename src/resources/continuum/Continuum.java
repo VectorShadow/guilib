@@ -15,6 +15,10 @@ public class Continuum<E> implements Serializable {
     E base;
     ArrayList<Pair<E>> pairList;
 
+    public Continuum(E baseValue) {
+        this(baseValue, new ArrayList<>());
+    }
+
     public Continuum(E baseValue, ArrayList<Pair<E>> pairs) {
         base = baseValue;
         pairList = pairs;
