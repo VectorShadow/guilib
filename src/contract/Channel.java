@@ -127,27 +127,27 @@ public class Channel {
     }
 
     public int maxCol(){
-        return mainZone.lowerRightBound().x;
+        return mainZone.maxCol();
     }
     public int minCol(){
-        return mainZone.upperLeftBound().x;
+        return mainZone.minCol();
     }
     public int maxRow(){
-        return mainZone.lowerRightBound().y;
+        return mainZone.maxRow();
     }
     public int minRow(){
-        return mainZone.upperLeftBound().y;
+        return mainZone.minRow();
     }
     public int maxCol(int zoneID){
-        return zones.get(zoneID).lowerRightBound().x;
+        return zones.get(zoneID).maxCol();
     }
     public int minCol(int zoneID){
-        return zones.get(zoneID).upperLeftBound().x;
+        return zones.get(zoneID).minCol();
     }
     public int maxRow(int zoneID){
-        return zones.get(zoneID).lowerRightBound().y;
+        return zones.get(zoneID).maxRow();
     }
     public int minRow(int zoneID){
-        return zones.get(zoneID).upperLeftBound().y;
+        return zones.get(zoneID).minRow();
     }
 }

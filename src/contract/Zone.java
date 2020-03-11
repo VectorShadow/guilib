@@ -103,6 +103,11 @@ public class Zone {
      * Wrapping is handled by following the GlyphStringProtocol for this zone.
      */
     public Point print(int row, int col, GlyphString gs) {
+        if (row > maxRow()) return new Point(col, row);
+        if (col > maxCol() && row < maxRow()) {
+            col = minCol();
+            ++row;
+        }
         ArrayList<Glyph> glyphString = gs.asList();
         ArrayList<Glyph> remainder;
         ArrayList<Glyph> nextWord;
@@ -192,13 +197,20 @@ public class Zone {
                     "Zone bounds: (" + border + ", " + border + ") -> (" + (zoneCols() - border - 1) + ", "
                     + (zoneRows() - border - 1) + ").");
     }
-    public Point lowerRightBound() {
-        int border = mode.getGlyphStringProtocol().getBorderSize();
-        return new Point(zoneCols() - border - 1, zoneRows() - border - 1);
+    private int borderSize() {
+        return mode.getGlyphStringProtocol().getBorderSize();
     }
-    public Point upperLeftBound() {
-        int border = mode.getGlyphStringProtocol().getBorderSize();
-        return new Point(border, border);
+    public int maxCol(){
+        return zoneCols() - borderSize() - 1;
+    }
+    public int minCol(){
+        return borderSize();
+    }
+    public int maxRow(){
+        return zoneRows() - borderSize() - 1;
+    }
+    public int minRow(){
+        return borderSize();
     }
     /**
      * Move the print cursor the specified number of places forward.
