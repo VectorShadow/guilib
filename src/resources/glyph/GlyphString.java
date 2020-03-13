@@ -67,7 +67,7 @@ public class GlyphString {
                 gb.addBackgroundColor(bp);
             }
             for (Pair<Color> fp : additionalForegrounds) {
-                gb.addBackgroundColor(fp);
+                gb.addForegroundColor(fp);
             }
             glyphString.add(gb.build());
         }
