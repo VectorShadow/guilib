@@ -139,4 +139,6 @@ public interface Gui {
     int maxRow(int zoneID);
     //return the value of the minimum row which can be displayed to in the current channel and specified zone
     int minRow(int zoneID);
+    //return the main zone index of the glyph just outside the specified zone - row or col index, before or after zone
+    int from(int channelID, int zoneID, boolean row, boolean before);
 }

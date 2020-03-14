@@ -150,4 +150,21 @@ public class Channel {
     public int minRow(int zoneID){
         return zones.get(zoneID).minRow();
     }
+
+    /**
+     * Return the indices of the main zone glyph just outside of the specified zone.
+     * @param zoneID the ID of the zone to find the edge of
+     * @param row true if we want a row index, false if column
+     * @param before true if we want an index before the zone begins, false if after it ends
+     * @return the index of the desired glyph
+     */
+    public int from(int zoneID, boolean row, boolean before) {
+        Zone z = zones.get(zoneID);
+        int pixelsToDesiredGlyph = row ? before ? z.rowOrigin : z.rowOrigin + z.numRows
+                : before ? z.colOrigin : z.colOrigin + z.numCols;
+        int mainZonePixels = row ? mainZone.numRows : mainZone.numCols;
+        int mainZoneGlyphs = row ? mainZone.zoneRows() : mainZone.zoneCols();
+        int mainZonePixelsPerGlyph = mainZonePixels / mainZoneGlyphs;
+        return pixelsToDesiredGlyph / mainZonePixelsPerGlyph - (before ? 1 : 0);
+    }
 }
