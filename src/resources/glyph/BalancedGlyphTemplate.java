@@ -1,5 +1,6 @@
 package resources.glyph;
 
+import resources.continuum.Continuum;
 import resources.continuum.Pair;
 
 import java.awt.*;
@@ -20,30 +21,44 @@ public class BalancedGlyphTemplate implements Serializable {
         backgroundColors = b;
         foregroundColors = f;
     }
-    public Character getBaseSymbol() {
-        return symbols.get(0);
+
+    public ArrayList<Character> getSymbols() {
+        return symbols;
     }
 
-    public ArrayList<Character> listAdditionalSymbols() {
-        return new ArrayList<>(symbols.subList(1, symbols.size()));
+    public ArrayList<Color> getBackgroundColors() {
+        return backgroundColors;
+    }
+
+    public ArrayList<Color> getForegroundColors() {
+        return foregroundColors;
+    }
+
+    public Character getBaseSymbol() {
+        return symbols.get(0);
     }
 
     public Color getBaseBackgroundColor() {
         return backgroundColors.get(0);
     }
 
-    public ArrayList<Color> listAdditionalBackgroundColors() {
-        return new ArrayList<>(backgroundColors.subList(1, backgroundColors.size()));
-    }
-
     public Color getBaseForegroundColor() {
         return foregroundColors.get(0);
     }
 
-    public ArrayList<Color> listAdditionalForegroundColors() {
-        return new ArrayList<>(foregroundColors.subList(1, foregroundColors.size()));
+    /**
+     * Apply this BalancedGlyphTemplate to a String to return a GlyphString with the same characteristics.
+     */
+    public GlyphString apply(String s) {
+        Continuum<Color> bgc = new Continuum<>(backgroundColors);
+        Continuum<Color> fgc = new Continuum<>(foregroundColors);
+        return new GlyphString(s, getBaseBackgroundColor(), getBaseForegroundColor(), bgc.getPairList(), fgc.getPairList());
     }
 
+    /**
+     * @return a GlyphBuilder which contains the basic elements of this BalancedGlyphTemplate, and can then be
+     * further updated or built as is.
+     */
     public GlyphBuilder partialBalancedGlyph(){
         GlyphBuilder gb =
                 GlyphBuilder
@@ -53,27 +68,15 @@ public class BalancedGlyphTemplate implements Serializable {
                                 getBaseForegroundColor(),
                                 getBaseSymbol()
                         );
-        int count = backgroundColors.size();
-        double pctEach = 1.0 / (double)count;
-        double pctNext = pctEach;
-        for (Color b : listAdditionalBackgroundColors()) {
-            gb.addBackgroundColor(new Pair<>(pctNext, b));
-            pctNext += pctEach;
-        }
-        count = foregroundColors.size();
-        pctEach = 1.0 / (double)count;
-        pctNext = pctEach;
-        for (Color f : listAdditionalForegroundColors()) {
-            gb.addForegroundColor(new Pair<>(pctNext, f));
-            pctNext += pctEach;
-        }
-        count = symbols.size();
-        pctEach = 1.0 / (double)count;
-        pctNext = pctEach;
-        for (char s : listAdditionalSymbols()) {
-            gb.addSymbol(new Pair<>(pctNext, s));
-            pctNext += pctEach;
-        }
+        Continuum<Color> bgc = new Continuum<>(backgroundColors);
+        Continuum<Color> fgc = new Continuum<>(foregroundColors);
+        Continuum<Character> sc = new Continuum<>(symbols);
+        ArrayList<Pair<Color>> bgpl = bgc.getPairList();
+        ArrayList<Pair<Color>> fgpl = fgc.getPairList();
+        ArrayList<Pair<Character>> spl = sc.getPairList();
+        for (Pair<Color> bcp : bgpl) gb.addBackgroundColor(bcp);
+        for (Pair<Color> fcp : fgpl) gb.addForegroundColor(fcp);
+        for (Pair<Character> sp : spl) gb.addSymbol(sp);
         return gb;
     }
 }

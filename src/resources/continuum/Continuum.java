@@ -24,6 +24,12 @@ public class Continuum<E> implements Serializable {
         pairList = pairs;
         pairList.sort(new PairComparator());
     }
+
+    public Continuum(ArrayList<E> balancedValues) {
+        base = balancedValues.get(0);
+        pairList = balanceElements(balancedValues);
+        //automatically sorts
+    }
     public E getValue(Random r) {
         double roll = r.nextDouble();
         for (Pair<E> p : pairList) {
@@ -43,6 +49,10 @@ public class Continuum<E> implements Serializable {
         return base;
     }
 
+    public ArrayList<Pair<E>> getPairList() {
+        return pairList;
+    }
+
     /**
      * Is e equivalent to the base of this continuum, or does one of the pairs belonging to this continuum contain e?
      */
@@ -53,5 +63,19 @@ public class Continuum<E> implements Serializable {
                 return true;
         }
         return false;
+    }
+
+    public static double balancedPercent(int total) {
+        return 1.0 / (double)total;
+    }
+    private ArrayList<Pair<E>> balanceElements(ArrayList<E> elements) {
+        ArrayList<Pair<E>> balancedElements = new ArrayList<>();
+        double pctEach;
+        double pctNext = pctEach = balancedPercent(elements.size());
+        for (int i = 1; i < elements.size(); ++i) {
+            balancedElements.add(new Pair<>(pctNext, elements.get(i)));
+            pctNext += pctEach;
+        }
+        return balancedElements;
     }
 }
