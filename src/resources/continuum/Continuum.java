@@ -47,7 +47,7 @@ public class Continuum<E> implements Serializable {
      * Is e equivalent to the base of this continuum, or does one of the pairs belonging to this continuum contain e?
      */
     public boolean contains(E e) {
-        if (base.equals(e)) return true;
+        if (base != null && base.equals(e)) return true;
         for (Pair<E> p : pairList) {
             if (p.contains(e))
                 return true;
