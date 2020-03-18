@@ -78,4 +78,19 @@ public class Continuum<E> implements Serializable {
         }
         return balancedElements;
     }
+
+    /**
+     * Return a new continuum with all values besides the base multiplied by the threshold.
+     * Threshold values < 1.0 will result in a compression, with the base expanding by the total difference.
+     * Threshold values > 1.0 will result in an expansion, which can possibly increase multiple values over 1.0.
+     * This will result in those values becoming inaccessible to getValue().
+     */
+    public Continuum adjust(double threshold) {
+        if (threshold < 0.0)
+            throw new IllegalArgumentException("threshold must be non-negative");
+        ArrayList<Pair<E>> compressedList = new ArrayList<>();
+        for (Pair<E> p : pairList)
+            compressedList.add(new Pair<E>(p.probability * threshold, p.element));
+        return new Continuum(base, compressedList);
+    }
 }
