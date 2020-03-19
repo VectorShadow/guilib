@@ -61,6 +61,8 @@ public class Chroma {
     public static final Color COBALT = new Color(71, 95, 143);
     public static final Color RUST = new Color(191, 95, 63);
 
+    public static final Color FLESH = new Color(191, 127, 127);
+
 
     private static final double DIM_FACTOR = 2.0 / 5.0;
     private static final double DARK_FACTOR = 1.0 / 5.0;
