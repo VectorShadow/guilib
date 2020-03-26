@@ -4,6 +4,7 @@ import resources.glyph.ascii.SimpleGlyph;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Random;
  * It renders a colored character on a colored background.
  */
 
-public interface Glyph {
+public interface Glyph extends Serializable {
     enum WordBreak{
         NO_BREAK,
         SPACE,

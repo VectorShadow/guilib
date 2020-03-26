@@ -3,12 +3,13 @@ package resources.glyph;
 import resources.continuum.Pair;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Support the List-based concept of GlyphStrings.
  */
-public class GlyphString {
+public class GlyphString implements Serializable {
     ArrayList<Glyph> glyphString;
     String text;
     Color defaultBackground;
