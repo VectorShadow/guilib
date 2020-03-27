@@ -22,6 +22,18 @@ public class BalancedGlyphTemplate implements Serializable {
         foregroundColors = f;
     }
 
+    private BalancedGlyphTemplate(BalancedGlyphTemplate bgt) {
+        ArrayList<Character> clonedSymbols = new ArrayList<>();
+        ArrayList<Color> clonedBackgrounds = new ArrayList<>();
+        ArrayList<Color> clonedForegrounds = new ArrayList<>();
+        for (char c : bgt.symbols) clonedSymbols.add(c);
+        for (Color b : bgt.backgroundColors) clonedBackgrounds.add(new Color(b.getRed(), b.getGreen(), b.getBlue()));
+        for (Color f : bgt.foregroundColors) clonedForegrounds.add(new Color(f.getRed(), f.getGreen(), f.getBlue()));
+        symbols = clonedSymbols;
+        backgroundColors = clonedBackgrounds;
+        foregroundColors = clonedForegrounds;
+    }
+
     public ArrayList<Character> getSymbols() {
         return symbols;
     }
@@ -78,5 +90,10 @@ public class BalancedGlyphTemplate implements Serializable {
         for (Pair<Color> fcp : fgpl) gb.addForegroundColor(fcp);
         for (Pair<Character> sp : spl) gb.addSymbol(sp);
         return gb;
+    }
+
+    @Override
+    public BalancedGlyphTemplate clone() {
+        return new BalancedGlyphTemplate(this);
     }
 }
