@@ -87,4 +87,8 @@ public class GlyphString implements Serializable {
                 new ArrayList<>()
         );
     }
+
+    public String getText() {
+        return text;
+    }
 }
