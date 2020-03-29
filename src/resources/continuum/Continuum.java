@@ -93,4 +93,27 @@ public class Continuum<E> implements Serializable {
             compressedList.add(new Pair<E>(p.probability * threshold, p.element));
         return new Continuum(base, compressedList);
     }
+    /**
+     * Return a new continuum with the specified value assigned to the base, and all other values adjusted
+     * to match.
+     */
+    public Continuum rebase(double baseChance) {
+        if (baseChance < 0.0)
+            throw new IllegalArgumentException("base chance must be non-negative");
+        ArrayList<Pair<E>> rebasedList = new ArrayList<>();
+        if (baseChance < 1.0) {
+            double originalNonBaseChance = pairList.get(pairList.size() - 1).probability;
+            double newNonBaseChance = 1.0 - baseChance;
+            double rebaseRatio = newNonBaseChance / originalNonBaseChance;
+            for (Pair<E> p : pairList) rebasedList.add(new Pair<>(p.probability * rebaseRatio, p.element));
+        }
+        return new Continuum<>(base, rebasedList);
+    }
+
+    @Override
+    public String toString() {
+        String s = "Continuum - Base: " + base;
+        for (Pair<E> p : pairList) s += "Pair(" + p.element + "@" + p.probability + ")";
+        return s;
+    }
 }
