@@ -68,7 +68,7 @@ public class Continuum<E> implements Serializable {
     public static double balancedPercent(int total) {
         return 1.0 / (double)total;
     }
-    private ArrayList<Pair<E>> balanceElements(ArrayList<E> elements) {
+    public ArrayList<Pair<E>> balanceElements(ArrayList<E> elements) {
         ArrayList<Pair<E>> balancedElements = new ArrayList<>();
         double pctEach;
         double pctNext = pctEach = balancedPercent(elements.size());

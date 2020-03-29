@@ -1,5 +1,6 @@
 package resources.glyph;
 
+import resources.continuum.Continuum;
 import resources.continuum.Pair;
 
 import java.awt.*;
@@ -17,6 +18,16 @@ public class GlyphString implements Serializable {
     ArrayList<Pair<Color>> additionalBackgrounds;
     ArrayList<Pair<Color>> additionalForegrounds;
 
+    public GlyphString(String t, BalancedGlyphTemplate bgt) {
+        text = t;
+        Continuum<Color> balancedBackgrounds = new Continuum(bgt.getBaseBackgroundColor(), bgt.getBackgroundColors());
+        Continuum<Color> balancedForegrounds = new Continuum(bgt.getBaseForegroundColor(), bgt.getForegroundColors());
+        defaultBackground = balancedBackgrounds.getBase();
+        defaultForeground = balancedForegrounds.getBase();
+        additionalBackgrounds = balancedBackgrounds.getPairList();
+        additionalForegrounds = balancedForegrounds.getPairList();
+        glyphString = build(text, defaultBackground, defaultForeground, additionalBackgrounds, additionalForegrounds);
+    }
     public GlyphString(String t, Color dbg, Color dfg, ArrayList<Pair<Color>> abg, ArrayList<Pair<Color>> afg) {
         text = t;
         defaultBackground = dbg;
