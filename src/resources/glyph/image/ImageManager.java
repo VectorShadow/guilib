@@ -15,13 +15,20 @@ import java.util.HashMap;
  */
 public class ImageManager {
 
+    private static boolean graphicsOn = false;
+
     private static HashMap<RenderContext, BufferedImage> tilesets = new HashMap<>();
 
     public static void loadGraphics(RenderContext rc, File file) throws IOException {
         tilesets.put(rc, ImageIO.read(file));
+        graphicsOn = true;
     }
     public static boolean hasGraphics() {
-        return !tilesets.isEmpty();
+        return !tilesets.isEmpty() && graphicsOn;
+    }
+
+    public static void toggleGraphics() {
+        graphicsOn = !graphicsOn;
     }
 
     public static BufferedImage imageAt(int row, int col, RenderContext rc) {
@@ -39,7 +46,7 @@ public class ImageManager {
         return out;
     }
     public static boolean exists(int row, int col, RenderContext rc) {
-        if (!tilesets.containsKey(rc) || row < 0 || col < 0) return false;
+        if (!tilesets.containsKey(rc) || row < 0 || col < 0 || !graphicsOn) return false;
         int h = rc.imageSize().height;
         int w = rc.imageSize().width;
         return h * row + h <= (tilesets.get(rc)).getHeight() && w * col + w <= (tilesets.get(rc)).getWidth();
