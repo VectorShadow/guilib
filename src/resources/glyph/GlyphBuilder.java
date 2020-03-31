@@ -63,7 +63,7 @@ public class GlyphBuilder {
     public GlyphBuilder setDefaults(Color defaultBackground, Color defaultForeground, char defaultSymbol){
         return setDefaults(defaultBackground, defaultForeground, defaultForeground, defaultSymbol);
     }
-    GlyphBuilder setDefaults(
+    public GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -71,7 +71,7 @@ public class GlyphBuilder {
     ){
         return setDefaults(defaultBackground, defaultPrimary, defaultSecondary, defaultSecondary, defaultSymbol);
     }
-    GlyphBuilder setDefaults(
+    public GlyphBuilder setDefaults(
             Color defaultBackground,
             Color defaultPrimary,
             Color defaultSecondary,
@@ -95,15 +95,15 @@ public class GlyphBuilder {
         fp.add(fc);
         return this;
     }
-    private GlyphBuilder addPrimaryColor(Pair<Color> pc) {
+    public GlyphBuilder addPrimaryColor(Pair<Color> pc) {
         return addForegroundColor(pc);
     }
-    private GlyphBuilder addSecondaryColor(Pair<Color> sc) {
+    public GlyphBuilder addSecondaryColor(Pair<Color> sc) {
         fs.add(sc);
         return this;
     }
-    private GlyphBuilder addTertiaryColor(Pair<Color> tc) {
-        fs.add(tc);
+    public GlyphBuilder addTertiaryColor(Pair<Color> tc) {
+        ft.add(tc);
         return this;
     }
 
@@ -111,19 +111,9 @@ public class GlyphBuilder {
         this.sym.add(sym);
         return this;
     }
-    private GlyphBuilder setImageRowAndColumn(int row, int col) {
+    public GlyphBuilder setImageRowAndColumn(int row, int col) {
         imageRow = row;
         imageCol = col;
-        return this;
-    }
-    public GlyphBuilder readProtoGlyph(ProtoGlyph pg, boolean vague) {
-        setDefaults(pg.background, pg.primary, pg.secondary, pg.tertiary, vague ? pg.vagueSymbol : pg.visibleSymbol);
-        for (Pair<Color> bg : pg.backgrounds) addBackgroundColor(bg);
-        for (Pair<Color> pri : pg.primaries) addBackgroundColor(pri);
-        for (Pair<Color> sec : pg.secondaries) addBackgroundColor(sec);
-        for (Pair<Color> ter : pg.tertiaries) addBackgroundColor(ter);
-        for (Pair<Character> sym : vague ? pg.vagueSymbols : pg.visibleSymbols) addSymbol(sym);
-        setImageRowAndColumn(vague ? pg.vagueImageRow : pg.visibleImageRow, vague ? pg.vagueImageCol : pg.visibleImageCol);
         return this;
     }
     private ArrayList<Pair<Color>> compressColors(double insertedProbability, ArrayList<Pair<Color>> originalList, ArrayList<Pair<Color>> updatedList) {
