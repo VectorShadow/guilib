@@ -103,7 +103,7 @@ public class Continuum<E> implements Serializable {
         if (baseChance < 0.0)
             throw new IllegalArgumentException("base chance must be non-negative");
         ArrayList<Pair<E>> rebasedList = new ArrayList<>();
-        if (baseChance < 1.0) {
+        if (baseChance < 1.0 && pairList.size() > 0) {
             double originalNonBaseChance = pairList.get(pairList.size() - 1).probability;
             double newNonBaseChance = 1.0 - baseChance;
             double rebaseRatio = newNonBaseChance / originalNonBaseChance;
