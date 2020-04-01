@@ -88,6 +88,8 @@ public class Continuum<E> implements Serializable {
     public Continuum adjust(double threshold) {
         if (threshold < 0.0)
             throw new IllegalArgumentException("threshold must be non-negative");
+        if (threshold == 1.0)
+            return this; //the continuum is unchanged by this operation
         ArrayList<Pair<E>> compressedList = new ArrayList<>();
         for (Pair<E> p : pairList)
             compressedList.add(new Pair<E>(p.probability * threshold, p.element));
