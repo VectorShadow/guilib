@@ -22,7 +22,7 @@ public interface Gui {
     //terminate the GUI environment
     void close();
     //set the GUI to fullscreen or windowed
-    void setFullScreen(boolean fullScreen);
+    void setFullScreenMode(boolean fullScreen);
     //toggle the fullscreen/windowed mode of the gui
     void toggleFullScreen();
     /**
