@@ -71,20 +71,20 @@ public class Channel {
         return zones.get(zone).print(row, col, gs);
     }
 
-    public void printCentered(int row, GlyphString gs) {
+    public Point printCentered(int row, GlyphString gs) {
         int c = mainZone.zoneCols();
         int l = gs.size();
         //don't print more than 1 line - cut the input short instead
-        if (l >= c - 2) print(row, 1, gs.subGlyphString(0, c - 2));
-        else print(row, c / 2 - l / 2, gs);
+        if (l >= c - 2) return print(row, 1, gs.subGlyphString(0, c - 2));
+        else return print(row, c / 2 - l / 2, gs);
     }
-    public void printCentered(int zone, int row, GlyphString gs) {
+    public Point printCentered(int zone, int row, GlyphString gs) {
         Zone z = zones.get(zone);
         int c = z.zoneCols();
         int l = gs.size();
         //don't print more than 1 line - cut the input short instead
-        if (l >= c - 2) print(zone, row, 1, gs.subGlyphString(0, c - 2));
-        else print(zone, row, c / 2 - l / 2, gs);
+        if (l >= c - 2) return print(zone, row, 1, gs.subGlyphString(0, c - 2));
+        else return print(zone, row, c / 2 - l / 2, gs);
     }
     public void draw(boolean fullScreen, BufferedImage bufferedImage) {
         mainZone.draw(fullScreen, true, bufferedImage);

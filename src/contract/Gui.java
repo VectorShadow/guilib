@@ -83,9 +83,9 @@ public interface Gui {
     // and return the row and column of the last Glyph
     Point print(int zone, int row, int col, GlyphString gs);
     //set a String of Glyphs aligned to the center of the screen within the current display channel
-    void printCentered(int row, GlyphString gs);
+    Point printCentered(int row, GlyphString gs);
     //set a String of Glyphs aligned to the center of the zone within the current display channel
-    void printCentered(int zone, int row, GlyphString gs);
+    Point printCentered(int zone, int row, GlyphString gs);
     //draw all currently set Glyphs within the current io.display channel to the monitor
     void redraw();
     //set an icon image for the windowed frame
