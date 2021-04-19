@@ -2,6 +2,7 @@ package resources.continuum;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -17,6 +18,10 @@ public class Continuum<E> implements Serializable {
 
     public Continuum(E baseValue) {
         this(baseValue, new ArrayList<>());
+    }
+
+    public Continuum(E baseValue, Pair<E>... pairs) {
+        this(baseValue, (ArrayList<Pair<E>>) Arrays.asList(pairs));
     }
 
     public Continuum(E baseValue, ArrayList<Pair<E>> pairs) {
